@@ -1,0 +1,25 @@
+﻿@page "/signin"
+
+<div class="w-100 pt-5 d-flex flex-column justify-content-center align-items-center" style="">
+    <h1>Sign In</h1>
+    <h2 class="mb-5">Log into your account</h2>
+
+    <form class="w-50" style="max-width: 40em">
+        <div class="d-flex flex-column">
+            <label style="font-size:small; line-height: 1.2em">Phone Number</label>
+            <input class="form-control form-control-lg" type="number">
+        </div>
+        <div class="my-4">
+            <div class="d-flex align-items-center justify-content-between" style="">
+                <label style="font-size:small; line-height: 1.2em">Password</label>
+                <a href="" style="font-size:small">Forgot Password?</a>
+            </div>
+            <input class="form-control form-control-lg" type="password">
+        </div>
+        <a href="register" class="btn btn-lg btn-primary w-100">Create Account</a>
+        <a style="border: 1px solid silver" class="btn btn-lg w-100 my-3">Sign In</a>
+    </form>
+</div>
+@code {
+
+}

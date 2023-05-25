@@ -1,0 +1,97 @@
+﻿@page "/sms"
+@using SharedProject.Services;
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+<h3>Send an SMS message</h3>
+<RadzenNotification></RadzenNotification>
+<div class="rz-p-sm-12 rz-text-align-center">
+    <RadzenDropDown @bind-Value=@value Data=@customers Style="width: 500px;">
+        <Template>
+            Service: @((context as String))
+        </Template>
+        <ValueTemplate>
+            Service: @((context as String))
+        </ValueTemplate>
+    </RadzenDropDown>
+</div>
+@*<div class="w-100 mt-4 @smsVisibility justify-content-center d-flex flex-column align-items-center">
+    <RadzenFormField class="col-3" Text="Recepients PhoneNumber" Variant="@variant">
+        <RadzenTextBox @bind-Value="@phoneNumber" />
+    </RadzenFormField>
+
+    <div class="col-md-6 my-3 col-lg-4 p-3">
+        <RadzenCard>
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Type a Message</RadzenText>
+            <RadzenTextArea @bind-Value="@message" class="w-100" />
+        </RadzenCard>
+    </div>
+
+    <RadzenButton Click=@(args => OnClick("Secondary button with text and icon")) Text="Send Message" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Secondary" />
+</div>
+*@
+
+
+<div class="col-md-6 my-3 col-lg-4 p-3">
+    <RadzenCard>
+        <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Type a Message</RadzenText>
+        <RadzenTextArea @bind-Value="@message" class="w-100" />
+    </RadzenCard>
+</div>
+
+<RadzenButton Click=@(args => OnClick(@message)) Text="Send Message" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Secondary" />
+
+<EventConsole @ref=@console />
+
+@code {
+    EventConsole? console;
+    string smsVisibility = "d-none";
+    string? service = null;
+    TwilioService TwilioService = new TwilioService();
+    Variant variant = Variant.Outlined;
+    String phoneNumber = "";
+    String message = "";
+    string value = "Select a Service";
+    List<String> customers = new List<string>()
+    {
+        "SMS","Voice", "Whatsapp", "Email", "Video"
+    };
+
+    public void onDropDown()
+    {
+        if (value.ToLower() == "sms")
+        {
+            value = "sms";
+            smsVisibility = "d-block";
+        }
+    }
+
+    private async void OnClick(string text)
+    {
+        //String status = TwilioService.SendSms(phoneNumber, message);
+        CompletionMessageParameter body = new CompletionMessageParameter
+        {
+                prompts = text
+        };
+        HttpClient httpClient = new HttpClient();
+        var jsonObj = Newtonsoft.Json.JsonConvert.SerializeObject(body);
+        var content = new StringContent(jsonObj, System.Text.Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await httpClient.PostAsync("https://localhost:7282/api/OpenAI", content);
+        console.Log(response.Content.ReadAsStringAsync());
+        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = response.Content.ToString(), Detail = response.StatusCode.ToString(), Duration = 100000 });
+        console.Log($"{response.Content} value changed to");
+        //if(status == true)
+        //{
+        //    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Message Sent Successfully", Detail = "Success Detail", Duration = 4000 });
+        //}
+        //else
+        //{
+        //    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Message Could not be sent", Detail = text });
+        //}
+
+
+    }
+
+
+
+
+}

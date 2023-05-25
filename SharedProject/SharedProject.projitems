@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>9c7a67ca-819f-4859-82ea-62a556f37489</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharedProject</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CaseCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Company.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CompletionMessageParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\LegalFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\TwilioService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Models\Directory.Build.props" />
+  </ItemGroup>
+</Project>

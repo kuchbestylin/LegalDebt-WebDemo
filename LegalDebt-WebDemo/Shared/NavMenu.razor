@@ -1,0 +1,59 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">LegalDebt-WebDemo</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <Icon Class="mx-3" Name="IconName.HouseFill" Size="IconSize.x4"></Icon> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="clientlookup">
+                <Icon Class="mx-3" Name="IconName.Search" Size="IconSize.x4"></Icon> Client Lookup
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/newfile/existingclient">
+                <Icon Class="mx-3" Name="IconName.PersonCheckFill" Size="IconSize.x4"></Icon> New File (Existing Client)
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/newfile/newclient">
+                <Icon Class="mx-3" Name="IconName.PersonPlusFill" Size="IconSize.x4"></Icon>New File (New Client)
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="sms">
+                <Icon Class="mx-3" Name="IconName.Messenger" Size="IconSize.x4"></Icon> Scheduler
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <Icon Class="mx-3" Name="IconName.Table" Size="IconSize.x4"></Icon> News and Updates
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="userlogin">
+                <Icon Class="mx-3" Name="IconName.PersonFill" Size="IconSize.x4"></Icon> User Login
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

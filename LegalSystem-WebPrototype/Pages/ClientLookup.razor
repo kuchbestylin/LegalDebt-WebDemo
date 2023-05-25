@@ -1,0 +1,84 @@
+﻿@page "/clientlookup"
+
+<section class="mb-5">
+    <div class="w-100 d-flex flex-column align-items-center gap-2">
+        <h3 class="fw-bold">Legal Debt</h3>
+        <div class="w-50 d-flex flex-column">
+            <div style="font-size:small" class="d-flex align-items-baseline ms-3 float-start">
+                <label style="font-size:small">Find By:</label>
+                <select class="border-0">
+                    <option selected>ID</option>
+                    <option>Name</option>
+                </select>
+            </div>
+            <div class="d-flex p-0 gap-2 d-flex align-items-center ps-3" style="border: 1px solid silver; border-radius:0.4em">
+                <i class="fa fa-search"></i>
+                <input class="search-box px-2" style="border-radius:0.4em;" type="search" placeholder="Search Legal Debt..." />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="p-2" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);">
+    <div style="font-size:small" class="w-100 ps-1 pe-2 d-flex align-items-end justify-content-between">
+        <div class="fw-bold">288 results (3.4ms)</div>
+        <div class="d-flex align-items-center gap-4">
+            <div style="border-radius: 5px">
+                <label>Sort By: </label>
+                <select>
+                    <option>Best Match</option>
+                    <option>Name</option>
+                    <option>Current Company</option>
+                </select>
+            </div>
+            <a href=""><i class="fa fa-bars fs-5"></i></a>
+        </div>
+    </div>
+    <table  class="w-100" style="" border="1">
+        <thead>
+            <tr>
+                <th>Sn</th>
+                <th>ID Number</th>
+                <th>Name</th>
+                <th>Current Company</th>
+                <th>Debt Status</th>
+                <th>Reliability</th>
+                <th>Files</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="font-size:small">
+            <tr style="">
+                <td>1</td>
+                <td>#74870bbfjn4fhnini2nkf2f08</td>
+                <td>
+                    <div style=" width:fit-content" class="d-flex align-items-center gap-2">
+                        <div style="border-radius:100%; height:2.5em; width: 2.5em; background-color:silver" class="fw-bolder d-flex justify-content-center align-items-lg-center">
+                            JA
+                        </div>
+                        <label>James Amutenya</label>
+                        <label class="fw-bold ms-2 d-flex">jamutenya@gmail.com</label>
+                    </div>
+                </td>
+                <td>Ikanga Legal Practitioners</td>
+                <td><div class="py-2 d-flex justify-content-center" style="border-radius:5px; background-color:lightgreen">Good Standing</div></td>
+                <td style="color:limegreen"><div class="d-flex justify-content-center">99%</div></td>
+                <td>
+                    <div class="d-flex flex-column gap-1">
+                        <div style="border:1px solid silver; background-color: green">Roe v. Wade</div>
+                        <div style="border:1px solid silver; background-color: red">Brown v. Board of Education</div>
+                        <div style="border:1px solid silver; background-color: lime">Miranda v. Arizona</div>
+                        <div style="border:1px solid silver; background-color: blue">Plessy v. Ferguson</div>
+                        <div style="border:1px solid silver; background-color: Yellow">Bush v. Gore</div>
+                    </div>
+                </td>
+                <td><div class="d-flex justify-content-center"><a href="">Advanced <i class="fa fa-gears"></i></a></div></td>
+            </tr>
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+</section>
+@code {
+
+}

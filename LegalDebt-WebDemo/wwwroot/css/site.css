@@ -1,0 +1,57 @@
+.text-theme {
+    color: rgb(5, 39, 103);
+}
+.border-red{
+    border: 1px solid red;
+}
+.border-blue{
+    border: 1px solid blue
+}
+.border-black{
+    border: 1px solid black
+}
+.create-new-button {
+    border: 1px solid rgb(5, 39, 223);
+}
+.create-new-bottom-popover {
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: small;
+    box-shadow: 0 0 2px 5px rgba(5, 39, 103, 1);
+    margin-top: 0.5em;
+    background-color: white;
+}
+
+.create-new-link:hover {
+    background-color: rgba(5, 39, 103, 0.02);
+    text-decoration: underline;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 3px;
+}
+
+.create-new-button:hover {
+    background-color: rgba(107, 22, 165, 0.07);
+    cursor: pointer;
+}
+
+.create-new-button:active {
+    background-color: rgba(107, 22, 165, 0.2);
+    cursor: pointer;
+}
+
+.search-box {
+    width: 100%;
+    height: 2.6em;
+    border: none;
+}
+
+    .search-box:active {
+        border: none !important;
+        outline: none;
+    }
+
+    .search-box:focus {
+        border: none !important;
+        outline: none;
+    }

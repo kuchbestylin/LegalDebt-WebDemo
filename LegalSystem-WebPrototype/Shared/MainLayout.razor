@@ -1,0 +1,92 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>BlazorApp2</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <datalist>
+                <a>Go here</a>
+                <a>Go there</a>
+            </datalist>
+            <ul class="m-0 p-0 list-unstyled position-relative">
+                <li>
+                    <button @onclick="showPopover" class="py-2 create-new-button px-3 text-black text-decoration-none" style="border: 1px solid lime; border-radius:0.2em;">
+                        <i class="fa fa-plus-circle"></i>
+                        <span class="mx-2">Create New</span>
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                </li>
+                <li class="position-absolute @display create-new-bottom-popover start-0 end-0">
+                    <ul class="w-100 d-flex align-items-center flex-column gap-2 list-unstyled px-2 py-3">
+                        <li class="create-new-link text-center w-a py-1">
+                            <a @onclick="showPopover" class="p-0 text-black m-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Client
+                            </a>
+                        </li>
+                        <li class="create-new-link text-center py-1"><a @onclick="showPopover" class="p-0 text-black m-0 text-decoration-none">Company User</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div>
+                <i class="fa-info"></i>
+                Support
+            </div>
+            <i class="fa fa-bars"></i>
+            <a href="signin">Sign In</a>
+        </div>
+
+        <article class="content px-4">
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Create New Client</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="font-size: small">
+                            <form class="d-flex flex-column gap-2">
+                                <div>
+                                    <label>First Name(s)</label>
+                                    <input type="text" class="form-control" />
+                                </div>
+                                <div>
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" />
+                                </div>
+                                <div>
+                                    <label>Email Address</label>
+                                    <input type="email" class="form-control" />
+                                </div>
+                                <div>
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" disabled value="Ikanga Legal Practitioners" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    String display = "d-none";
+    private void showPopover()
+    {
+        display = (display == "d-none") ? "d-block" : "d-none";
+
+    }
+}
