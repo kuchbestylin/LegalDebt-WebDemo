@@ -17,7 +17,7 @@
 @*                            <RadzWenDropDown AllowClear="true" @bind-Value=clientID AllowVirtualization="true"
                                             AllowFiltering="true" Data=@clients TextProperty="FullName" ValueProperty="Id" Style="width: 100%; max-width: 400px;" />*@
                             <RadzenDropDownDataGrid class="col-7"  @bind-Value=@clientID Data=@clients TextProperty="FullName" ValueProperty="Id"
-                                                    AllowColumnResize="true"  AllowFilteringByAllStringColumns="true">
+                                                    AllowColumnResize="true" AllowFilteringByAllStringColumns="true">
                                 <Columns>
                                     <RadzenDropDownDataGridColumn Property="FirstNames" Title="Name" Width="100px" />
                                     <RadzenDropDownDataGridColumn Property="LastName" Title="Surname" Width="100px" />

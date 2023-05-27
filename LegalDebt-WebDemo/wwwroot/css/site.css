@@ -1,9 +1,28 @@
+*{
+    font-family: 'Times New Roman', Times, serif
+}
 .text-theme {
-    color: rgb(5, 39, 103);
+    color: rgb(5, 39, 103) !important;
 }
-.border-red{
-    border: 1px solid red;
+.off-white {
+    color: rgba(230,230,255,1) !important;
 }
+.d-grid-fs{
+    font-size: 0.4em !important;
+}
+.support-button {
+    font-weight: lighter;
+    font-size: 1.1em;
+    border: 1px solid rgba(155,147,243,0.5);
+    background-color: rgba(5, 39, 103, 0.1);
+    border-radius: 5px;
+}
+.support-button:hover {
+    background-color: rgba(5, 39, 103, 1);
+}
+    .border-red {
+        border: 1px solid red;
+    }
 .border-blue{
     border: 1px solid blue
 }

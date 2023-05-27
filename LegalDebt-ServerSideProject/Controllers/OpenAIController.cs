@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Newtonsoft.Json;
 using Rystem.OpenAi;
 using Rystem.OpenAi.Completion;
 using SharedProject.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LegalDebt_ServerSideProject.Controllers
 {
@@ -19,15 +21,15 @@ namespace LegalDebt_ServerSideProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CompletionMessageParameter body)
+        public async Task<IActionResult> Post([FromBody] string message)
         {
             var results = await openAi.Chat
-                .RequestWithUserMessage(body.prompts)
+                .RequestWithUserMessage(message)
                 .SetMaxTokens(150)
                 .WithModel(ChatModelType.Gpt35Turbo)
                 .WithTemperature(0)
                 .ExecuteAsync();
-            return Ok(results.Choices[0].Message);
+            return Ok(results.Choices[0].Message.Content);
         } 
     }
 }
