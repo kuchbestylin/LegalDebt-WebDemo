@@ -1,0 +1,46 @@
+﻿<div class="w-100 h-100 d-flex justify-content-center">
+    <BlazorBootstrap.Modal Class="text-dark h-100" @ref="modal" title="Settings" Style="height: 800px" Size="BlazorBootstrap.ModalSize.ExtraLarge" UseStaticBackdrop="true">
+        <BodyTemplate>
+            <Settings></Settings>
+        </BodyTemplate>
+    </BlazorBootstrap.Modal>
+</div>
+<a @onclick="OnShowModalClick" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
+    <BlazorBootstrap.Icon Class="" Name="BlazorBootstrap.IconName.Gear" Size="BlazorBootstrap.IconSize.x5"></BlazorBootstrap.Icon>
+</a>
+@*<Modal @ref="modal" title="Schedule text message" style="z-index:10" UseStaticBackdrop="true">
+    <BodyTemplate>
+        <p style="font-size:0.8em">Write a message that will be broadcasted to all your clients with your custom number</p>
+        <div class="mb-4 w-100">
+            <RadzenFormField class="w-100" Style="font-size:0.8em" Text="TextMessage" Variant="Variant.Outlined">
+                <RadzenTextArea @bind-Value="@message" />
+            </RadzenFormField>
+        </div>
+        <div>
+            <RadzenFormField Text="Select Date">
+                <RadzenDatePicker @bind-Value=@date ShowTime="true" ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="MM/dd/yyyy HH:mm" />
+            </RadzenFormField>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
+        <Button Class="px-4 ms-2" Color="ButtonColor.Primary">Confirm</Button>
+    </FooterTemplate>
+</Modal>
+<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Launch static backdrop modal</Button>*@
+
+@code {
+    DateTime? date = DateTime.Now;
+    string message = "";
+    private BlazorBootstrap.Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+}

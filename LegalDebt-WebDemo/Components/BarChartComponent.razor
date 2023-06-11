@@ -1,7 +1,7 @@
 ﻿@using BlazorBootstrap.Extensions
 @using Color = System.Drawing.Color
 
-<BarChart @ref="barChart" Width="1000" Class="mb-4" />
+<BarChart @ref="barChart" Style="width: 70em" Class="mb-4" />
 @*<Button Type="BlazorBootstrap.ButtonType.Button" Color="ButtonColor.Primary" Size="Size.Small" @onclick="async () => await AddDataAsync()">Add Random Data</Button>
 <Button Type="BlazorBootstrap.ButtonType.Button" Color="ButtonColor.Primary" Size="Size.Small" @onclick="async () => await ShowHorizontalBarChartAsync()">Horizontal Bar Chart</Button>
 <Button Type="BlazorBootstrap.ButtonType.Button" Color="ButtonColor.Primary" Size="Size.Small" @onclick="async () => await ShowVerticalBarChartAsync()">Vertical Bar Chart</Button>*@
@@ -72,7 +72,7 @@
         return new BarChartDataset()
             {
                 Label = items[chartData.Datasets.Count],
-                Data = new List<double> { random.Next(120), random.Next(120), random.Next(120), random.Next(120), random.Next(120), random.Next(120), random.Next(120) },
+                Data = new List<double> { random.Next(300), random.Next(120), random.Next(120), random.Next(120), random.Next(120), random.Next(120), random.Next(120) },
                 BackgroundColor = new List<string> { c.ToRgbString() },
                 BorderColor = new List<string> { c.ToRgbString() },
                 BorderWidth = new List<double> { 0 },

@@ -1,93 +1,38 @@
-﻿@using BlazorBootstrap.Extensions
-@using Color = System.Drawing.Color
+﻿<RadzenChart style="width:35em">
+    <RadzenPieSeries Data="@filesByCategory" Title="Files" CategoryProperty="Category" ValueProperty="Files">
+        <RadzenSeriesDataLabels Visible="true" />
+    </RadzenPieSeries>
+</RadzenChart>
 
-<PieChart @ref="pieChart" Width="400" Class="mb-4" />
-@*
-<Button Type="BlazorBootstrap.ButtonType.Button" Color="ButtonColor.Primary" Size="Size.Small" @onclick="async () => await AddDataAsync()">Add Random Data</Button>
-*@
 @code {
-    private PieChart? pieChart;
+    bool showDataLabels = false;
 
-    private ChartData? chartData;
-    private PieChartOptions? chartOptions;
-    private List<string>? backgroundColors;
-
-    Random random = new Random();
-
-    protected override void OnInitialized()
+    class DataItem
     {
-        // prepare background colors
-        PrepareBackgroundColors();
+        public string Category { get; set; }
+        public double Files { get; set; }
+    }
 
-        chartData = new ChartData
-            {
-                Labels = new List<string> { "Land Ownership", "Disputes", "Murder", "Property Ownership", "Bills", "Credit Issues" },
-                Datasets = new List<IChartDataset>()
-            };
-
-        chartData.Datasets.Add(GetRandomPieChartDataset());
-
-        chartOptions = new PieChartOptions
+    DataItem[] filesByCategory = new DataItem[] {
+        new DataItem
         {
-            Responsive = true,
-        };
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
+            Category = "Land Ownership",
+            Files = 30000
+        },
+        new DataItem
         {
-            await pieChart.InitializeAsync(chartData, chartOptions);
-        }
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
-    private async Task AddDataAsync()
-    {
-        if (chartData is null || chartData.Datasets is null) return;
-
-        chartData.Datasets.Add(GetRandomPieChartDataset());
-        await pieChart.UpdateAsync(chartData, chartOptions);
-    }
-
-    private PieChartDataset GetRandomPieChartDataset()
-    {
-        return new PieChartDataset()
-            {
-                Data = new List<double>
-            {
-                random.Next(120),
-                random.Next(120),
-                random.Next(120),
-                random.Next(120),
-                random.Next(120),
-                random.Next(120)
-            },
-                BackgroundColor = new List<string>
-            {
-                backgroundColors[0],
-                backgroundColors[1],
-                backgroundColors[2],
-                backgroundColors[3],
-                backgroundColors[4],
-                backgroundColors[5]
-            },
-            };
-    }
-
-    private void PrepareBackgroundColors()
-    {
-        if (backgroundColors is null)
+            Category = "Mariage Certificates",
+            Files = 40000
+        },
+        new DataItem
         {
-            backgroundColors = new List<string>();
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-            backgroundColors.Add(GetRandomColor().ToRgbString());
-        }
-    }
-
-    private Color GetRandomColor() => Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            Category = "Debt Issues",
+            Files = 50000
+        },
+        new DataItem
+        {
+            Category = "Company Ownership",
+            Files = 80000
+        },
+    };
 }

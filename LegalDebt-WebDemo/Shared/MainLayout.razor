@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject DialogService DialogService
+
+
 <div class="d-flex flex-column p-0" style="background-color: rgba(0,0,20,1); color: rgba(230,230,255,1); position: fixed; height: 60px; overflow:hidden; width: 100%; top: 0; left: 0">
     <div class="d-flex h-100 p-0 align-items-center justify-content-between fw-bold w-100" style="background-color: rgba(120,120,255,0.3);">
         <div class="d-flex gap-4 w-100 p-0 m-0 h-100 align-items-center">
@@ -39,9 +41,10 @@
             <a href="" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
                 <Icon Class="" Name="IconName.InfoCircle" Size="IconSize.x5"></Icon>
             </a>
-            <a href="" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
+            <a @onclick="OnShowModalClick" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
                 <Icon Class="" Name="IconName.Gear" Size="IconSize.x5"></Icon>
             </a>
+            <BlazoriseModalTest></BlazoriseModalTest>
             <a href="" class="d-flex px-2 text-white text-decoration-none align-items-center gap-2 ">
                 <Icon Class="" Name="IconName.PersonCircle" Size="IconSize.x2"></Icon>
             </a>
@@ -52,7 +55,7 @@
     <div class="off-white" style="background-color: rgba(10,5,40,1); width: 4%">
         <NavMenu />
     </div>
-    <main class="off-white">
+    <main class="off-white" style="background-color: rgba(10,5,40,0.1);">
         @Body
     </main>
 </div>
@@ -147,10 +150,30 @@
 </Modal>
 
 
-        @code {
+<div class="w-100 h-100 d-flex justify-content-center">
+    <Modal Class="text-dark h-100" @ref="modal" title="Settings" Style="height: 800px" Size="ModalSize.ExtraLarge" UseStaticBackdrop="true">
+    <BodyTemplate>
+        <Settings></Settings>
+    </BodyTemplate>
+    </Modal>
+</div>
+
+        
+
+@code {
 
 
+    private BlazorBootstrap.Modal modal = default!;
 
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
 
 
 

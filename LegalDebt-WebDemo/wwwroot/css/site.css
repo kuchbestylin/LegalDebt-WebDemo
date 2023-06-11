@@ -26,7 +26,30 @@
 .border-blue{
     border: 1px solid blue
 }
-.border-black{
+
+.on-hover-mouse{
+    width: 170px;
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+}
+
+.on-hover-mouse:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,50,0.1);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 50, 0.15);
+}
+.on-hover-mouse:active {
+    cursor: pointer;
+    background-color: rgba(0,0,50,0.1);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 50, 0.2);
+}
+
+.active-shadow {
+    background-color: rgba(0,0,50,0.1);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 50, 0.1);
+}
+
+.border-black {
     border: 1px solid black
 }
 .create-new-button {
