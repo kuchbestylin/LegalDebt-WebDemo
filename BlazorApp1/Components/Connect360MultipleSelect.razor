@@ -1,0 +1,43 @@
+﻿<RadzenFormField Text="Add Participants" class="w-100">
+    <RadzenDropDownDataGrid AllowColumnResize="true" Style="width: 100%" @ref="grid" Chips="true" AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowClear="true" @bind-Value=@values
+                            Multiple="true" Placeholder="Select..." Data=@clients TextProperty="FirstNames" ValueProperty="Id">
+        <Columns>
+            <RadzenDropDownDataGridColumn Width="50px" Sortable="false">
+                <HeaderTemplate>
+                    <RadzenCheckBox Disabled="@(!grid.AllowSelectAll)" TriState="false" TValue="bool" Value="@(clients.Any(c => values != null && values.Contains(c.Id)))"
+                                    Change="@(args => values = args ? grid.View.Cast<Client>().Select(c => c.Id) : values = Enumerable.Empty<int>())" />
+                </HeaderTemplate>
+                <Template Context="data">
+                    <RadzenCheckBox TriState="false" Value="@(values != null && values.Contains(((Client) data).Id))"
+                                    TValue="bool" Change=@(args => grid.SelectItem(data)) @onclick:stopPropagation />
+                </Template>
+            </RadzenDropDownDataGridColumn>
+            <RadzenDropDownDataGridColumn Property="Id" Title="ID" Width="40px" />
+            <RadzenDropDownDataGridColumn Property="FullName" Title="Name" Width="160px" />
+            <RadzenDropDownDataGridColumn Property="Client.City" Title="City" Width="100px" />
+            <RadzenDropDownDataGridColumn Property="Client.Country" Title="Country" Width="100px" />
+        </Columns>
+    </RadzenDropDownDataGrid>
+</RadzenFormField>
+
+@code {
+    RadzenDropDownDataGrid<IEnumerable<int>> grid;
+    IEnumerable<Client> clients = new List<Client>
+    {
+        new Client() { Id= 1, FirstNames = "Gerhardus", LastName = "Gaoseb", FullName = "Gerhardus Gaoseb", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 2, FirstNames = "Bra", LastName = "G", FullName = "Bra G", TitleOfCourtesy = "Mr", CurrentCompany = "Facebook.com", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 3, FirstNames = "Jean", LastName = "Claude", FullName = "Jean Claude", TitleOfCourtesy = "Mrs", CurrentCompany = "Exodus Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 4, FirstNames = "Hans", LastName = "Detriecht", FullName = "Hans Detriecht", TitleOfCourtesy = "Mr", CurrentCompany = "Shoprite", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 5, FirstNames = "Payet", LastName = "Dimitry", FullName = "Payet Dimitry", TitleOfCourtesy = "Mrs", CurrentCompany = "Legal Wise", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 6, FirstNames = "Maritjie", LastName = "HR", FullName = "Maritjie HR", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 7, FirstNames = "Trent", LastName = "Arnold", FullName = "Trent Arnold", TitleOfCourtesy = "Mrs", CurrentCompany = "Telecom Namibia", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 8, FirstNames = "Phillipe", LastName = "Coutinho", FullName = "Phillipe Coutinho", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 9, FirstNames = "William", LastName = "Carvalho", FullName = "William Carvalho", TitleOfCourtesy = "Mrs", CurrentCompany = "Microsoft", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 10, FirstNames = "Cristiano", LastName = "Ronaldo", FullName = "Critiano Ronaldo", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 11, FirstNames = "Matheus", LastName = "Louthaus", FullName = "Matheus Louthaus", TitleOfCourtesy = "Mr", CurrentCompany = "Google", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+        new Client() { Id= 12, FirstNames = "Marius", LastName = "Bloodstan", FullName = "Marius Boodstan", TitleOfCourtesy = "Mrs", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"}
+    };
+
+    IEnumerable<int> values = new int[] { 1, 3 };
+
+}

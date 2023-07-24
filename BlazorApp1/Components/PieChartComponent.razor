@@ -1,0 +1,38 @@
+﻿<RadzenChart style="width:35em">
+    <RadzenPieSeries Data="@filesByCategory" Title="Files" CategoryProperty="Category" ValueProperty="Files">
+        <RadzenSeriesDataLabels Visible="true" />
+    </RadzenPieSeries>
+</RadzenChart>
+
+@code {
+    bool showDataLabels = false;
+
+    class DataItem
+    {
+        public string Category { get; set; }
+        public double Files { get; set; }
+    }
+
+    DataItem[] filesByCategory = new DataItem[] {
+        new DataItem
+        {
+            Category = "Land Ownership",
+            Files = 30000
+        },
+        new DataItem
+        {
+            Category = "Mariage Certificates",
+            Files = 40000
+        },
+        new DataItem
+        {
+            Category = "Debt Issues",
+            Files = 50000
+        },
+        new DataItem
+        {
+            Category = "Company Ownership",
+            Files = 80000
+        },
+    };
+}

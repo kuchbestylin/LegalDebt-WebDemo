@@ -1,17 +1,83 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="navbar px-3 justify-content-between sticky-top navbar-expand-lg navbar-dark bg-dark" style="border-bottom: 1px solid white">
+    <a class="navbar-brand fw-bolder fs-3 p-0" style="letter-spacing:1px" href="#">Legal Debt</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="" id="navbarNav">
+        <ul class="navbar-nav mr-auto d-flex align-items-center gap-4">
+            <li class="nav-item">
+                <a href="" class="d-flex px-2 py-1 nav-link text-white text-decoration-none align-items-center gap-2 ">
+                    <Icon Class="" Name="IconName.Bell" Size="IconSize.x5"></Icon>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="d-flex px-2 py-1 nav-link text-white text-decoration-none align-items-center gap-2 ">
+                    <Icon Class="" Name="IconName.InfoCircle" Size="IconSize.x5"></Icon>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a @onclick="OnShowModalClick" class="d-flex px-2 nav-link py-1 text-white text-decoration-none align-items-center gap-2 ">
+                    <Icon Class="" Name="IconName.Gear" Size="IconSize.x5"></Icon>
+                </a>
+            </li>
+            <li class="nav-item mx-4 p-0">
+                <RadzenProfileMenu Style="background-color: transparent; color: white; padding:0">
+                    <Template>
+                        <Icon Class="" Name="IconName.PersonCircle" Size="IconSize.x2"></Icon>
+                    </Template>
+                    <ChildContent>
+                        <RadzenProfileMenuItem Text="Buttons" Path="buttons" Icon="account_circle"></RadzenProfileMenuItem>
+                        <RadzenProfileMenuItem Text="Menu" Path="menu" Icon="line_weight"></RadzenProfileMenuItem>
+                        <RadzenProfileMenuItem Text="FileInput" Path="fileinput" Icon="attach_file"></RadzenProfileMenuItem>
+                        <RadzenProfileMenuItem Text="Dialog" Path="dialog" Icon="perm_media"></RadzenProfileMenuItem>
+                        <RadzenProfileMenuItem Text="Notification" Path="notification" Icon="announcement"></RadzenProfileMenuItem>
+                    </ChildContent>
+                </RadzenProfileMenu>
+            </li>
+        </ul>
     </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
 </div>
+
+<div class="container-fluid">
+    <div class="row flex-nowrap d-flex" style="">
+        <div class="bg-dark sb" style="color: white;">
+            <NavMenu />
+        </div>
+        <div class="flex-fill p-0" style="background-color: rgba(5, 39, 103, 0.1);">
+            <div style="height: 100vh; overflow-y: auto;">
+                @Body
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-100 h-100 d-flex justify-content-center">
+    <Modal Class="text-dark h-100" @ref="modal" title="Settings" Style="height: 800px" Size="ModalSize.ExtraLarge" UseStaticBackdrop="true">
+    <BodyTemplate>
+        <Settings></Settings>
+    </BodyTemplate>
+    </Modal>
+</div>
+
+
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
+
+@code{
+    private BlazorBootstrap.Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+}

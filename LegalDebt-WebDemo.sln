@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalDebt-ServerSideProject
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{9C7A67CA-819F-4859-82EA-62A556F37489}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{A4461968-8D58-438E-9C3B-2474BFD70C43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{161C9140-6F9F-4482-B11C-37838824500E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,10 @@ Global
 		{B0B5AF21-79D7-40A4-8F4D-DDA4E9B727C7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C7A67CA-819F-4859-82EA-62A556F37489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C7A67CA-819F-4859-82EA-62A556F37489}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4461968-8D58-438E-9C3B-2474BFD70C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4461968-8D58-438E-9C3B-2474BFD70C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4461968-8D58-438E-9C3B-2474BFD70C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4461968-8D58-438E-9C3B-2474BFD70C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{161C9140-6F9F-4482-B11C-37838824500E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{161C9140-6F9F-4482-B11C-37838824500E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{161C9140-6F9F-4482-B11C-37838824500E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{161C9140-6F9F-4482-B11C-37838824500E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +39,7 @@ Global
 		SolutionGuid = {5AEB3EF8-7806-4273-AEEA-6896CFDF9633}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProject\SharedProject.projitems*{161c9140-6f9f-4482-b11c-37838824500e}*SharedItemsImports = 5
 		SharedProject\SharedProject.projitems*{8303f15f-847e-49cd-82b4-c8c7eed2a6cb}*SharedItemsImports = 5
 		SharedProject\SharedProject.projitems*{9c7a67ca-819f-4859-82ea-62a556f37489}*SharedItemsImports = 13
 		SharedProject\SharedProject.projitems*{b0b5af21-79d7-40a4-8f4d-dda4e9b727c7}*SharedItemsImports = 5

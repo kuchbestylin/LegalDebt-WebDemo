@@ -1,0 +1,23 @@
+﻿<div class="border-red d-flex flex-column justify-content-start position-relative align-items-center" style="width: 15em; z-index: 10">
+    <a @onclick="@toggle" class="gap-2 d-flex text-black text-decoration-none px-3 align-items-center" style="border: 1px solid black; cursor: pointer; height: 3em; ">
+        <Icon Name="IconName.PlusCircleFill"></Icon>
+        <span class="fw-bolder">Create New</span>
+        <Icon Name="IconName.CaretDownFill"></Icon>
+    </a>
+    <div class="border-black mt-5 position-absolute @toggleVisibility w-100">
+        <button class="w-100">Open New File</button>
+        <button class="w-100">Create New Client</button>
+    </div>
+</div>
+
+
+@code{
+    private bool isToggled = false;
+    private string toggleVisibility = "d-none";
+
+    public void toggle()
+    {
+        isToggled = (isToggled == true) ? false : true;
+        toggleVisibility = (isToggled) ? "d-none" : "d-block";
+    }
+}

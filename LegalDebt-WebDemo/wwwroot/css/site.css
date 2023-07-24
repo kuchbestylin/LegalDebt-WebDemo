@@ -20,9 +20,9 @@
 .support-button:hover {
     background-color: rgba(5, 39, 103, 1);
 }
-    .border-red {
-        border: 1px solid red;
-    }
+.border-red {
+    border: 1px solid red;
+}
 .border-blue{
     border: 1px solid blue
 }

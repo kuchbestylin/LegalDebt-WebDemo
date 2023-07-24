@@ -1,29 +1,37 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp1</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
+﻿<div style="" class="pt-3">
+    <nav class="flex-column d-flex g-4 gap-4">
+        <NavLink class="nav-link link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="" Match="NavLinkMatch.All">
+            <Icon Name="IconName.HouseDoor" Size="IconSize.x4"></Icon>
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Home</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="clientlookup">
+            <Icon Class="" Name="IconName.Search" Size="IconSize.x5"></Icon> 
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Lookup</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="analytics">
+            <Icon Class="" Name="IconName.Activity" Size="IconSize.x4"></Icon>
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Analytics</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="connect360">
+            <Icon Class="" Name="IconName.EnvelopeCheck" Size="IconSize.x4"></Icon>
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Connect360</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="violaai">
+            <Icon Class="" Name="IconName.Geo" Size="IconSize.x4"></Icon>
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">ViolaAI</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="/newfile/existingclient">
+            <Icon Class="" Name="IconName.UiChecksGrid" Size="IconSize.x4"></Icon> 
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Add File</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="/newfile/newclient">
+            <Icon Class="" Name="IconName.PersonPlus" Size="IconSize.x4"></Icon>
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">New File</span>
+        </NavLink>
+        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="userlogin">
+            <Icon Class="" Name="IconName.Person" Size="IconSize.x4"></Icon> 
+            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Login</span>
+        </NavLink>
     </nav>
 </div>
 

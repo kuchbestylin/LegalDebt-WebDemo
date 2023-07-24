@@ -10,44 +10,11 @@
             </a>
             <a class="p-0 m-0 off-white text-decoration-none fs-5">Ikanga Legal Practitioners</a>
         </div>
-        @*            <ul class="m-0 p-0 list-unstyled position-relative">
-        <li>
-        <button @onclick="showPopover" class="py-2 create-new-button px-3 text-black text-decoration-none" style="border-radius:0.2em;">
-        <Icon Class="text-theme" Name="IconName.PlusCircleFill"></Icon>
-        <span class="mx-2 fw-bold text-theme">Create New</span>
-        <Icon Class="text-theme"Name="IconName.CaretDownFill"></Icon>
-        </button>
-        </li>
-        <li class="position-absolute @display create-new-bottom-popover start-0 end-0">
-        <ul class="w-100 d-flex align-items-center flex-column gap-2 list-unstyled py-3">
-        <li class="create-new-link text-center py-1">
-        <a @onclick="OnShowExistingClientFileModalClick" style="font-size:0.8em" class="p-0 text-black m-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        File (For Existing Client)
-        </a>
-        </li>
-        <li class="create-new-link text-center w-a py-1">
-        <a @onclick="OnShowNewClientFileModalClick" style="font-size:0.8em" class="p-0 text-black m-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        File (For New Client)
-        </a>
-        </li>
-        <li class="create-new-link text-center py-1"><a @onclick="showPopover" style="font-size:0.8em" class="p-0 text-black m-0 text-decoration-none">Company User</a></li>
-        </ul>
-        </li>
-        </ul>*@
         <div class="d-flex me-4 gap-3 align-items-center">
-            <a href="" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
-                <Icon Class="" Name="IconName.Bell" Size="IconSize.x5"></Icon>
-            </a>
-            <a href="" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
-                <Icon Class="" Name="IconName.InfoCircle" Size="IconSize.x5"></Icon>
-            </a>
-            <a @onclick="OnShowModalClick" class="d-flex px-2 py-1 text-white text-decoration-none align-items-center gap-2 ">
-                <Icon Class="" Name="IconName.Gear" Size="IconSize.x5"></Icon>
-            </a>
-            <BlazoriseModalTest></BlazoriseModalTest>
-            <a href="" class="d-flex px-2 text-white text-decoration-none align-items-center gap-2 ">
-                <Icon Class="" Name="IconName.PersonCircle" Size="IconSize.x2"></Icon>
-            </a>
+
+
+
+
         </div>
     </div>
 </div>
@@ -76,78 +43,6 @@
 
     </main>
 </div>*@
-
-<Modal @ref="newClientFileModal" Title="Open A New File" UseStaticBackdrop="true">
-    <BodyTemplate>
-        <form class="d-flex flex-column gap-2">
-            <RadzenFormField Text="RadzenRadioButtonList" Variant="@Variant.Outlined">
-                <RadzenRadioButtonList @bind-Value=@radioButtonValue TValue="int" class="rz-m-4 rz-mt-8">
-                    <Items>
-                        <RadzenRadioButtonListItem Text="Orders" Value="1" />
-                        <RadzenRadioButtonListItem Text="Employees" Value="2" />
-                        <RadzenRadioButtonListItem Text="Customers" Value="3" />
-                    </Items>
-                </RadzenRadioButtonList>
-            </RadzenFormField>
-            <div>
-                <label>First Name(s)</label>
-                <input @bind-value="FirstNames" type="text" class="form-control" />
-            </div>
-            <div>
-                <label>Last Name</label>
-                <input @bind-value="LastName" type="text" class="form-control" />
-            </div>
-            <div>
-                <label>Email Address</label>
-                <input @bind-value="Email" type="email" class="form-control" />
-            </div>
-            <div>
-                <label>File ID</label>
-                <input @bind-value="fileID" type="text" class="form-control" />
-            </div>
-            <RadzenFormField Text="Bill" Variant="@Variant.Outlined">
-                <RadzenNumeric @bind-Value="@clientPhoneNumber" />
-            </RadzenFormField>
-            <div>
-                <label>Company</label>
-                <input @bind-value="CurrentCompany" type="text" class="form-control" disabled />
-            </div>
-        </form>
-    </BodyTemplate>
-    <FooterTemplate>
-        <Button Color="ButtonColor.Secondary" @onclick="OnHideNewClientModalClick">Close</Button>
-        <Button Color="ButtonColor.Primary" @onclick="newClient">Create</Button>
-    </FooterTemplate>
-</Modal>
-
-<Modal Style="height:100%; wei" @ref="existingClientFileModal" Title="Open A New File" UseStaticBackdrop="true">
-    <BodyTemplate>
-        <form class="d-flex flex-column gap-2">
-            <div>
-                <div>
-                    <div class="rz-text-align-center">
-                        <RadzenDropDown @bind-Value=value Data=@clients LoadData=@LoadData Count="@count" AllowVirtualization="true" AllowClear="true"
-                                        AllowFiltering="true" TextProperty="FullName" ValueProperty="Id" Style="width: 100%;" />
-                    </div>
-                </div>
-            </div>
-            <RadzenFormField Text="File ID" Style="width: 100%;">
-                <RadzenTextBox @bind-Value="@fileID" Style="width: 100%;" />
-            </RadzenFormField>
-            <div class="d-flex flex-column">
-                <label>Total Bill</label>
-                <RadzenNumeric out TValue="double" Format="c" @bind-Value=@bill />
-            </div>
-            <RadzenFormField Text="Law Firm" Style="width: 100%;">
-                <RadzenTextBox @bind-Value="@CurrentCompany" Disabled Style="width: 100%;" />
-            </RadzenFormField>
-        </form>
-    </BodyTemplate>
-    <FooterTemplate>
-        <Button Color="ButtonColor.Secondary" @onclick="OnHideExistingClientModalClick">Close</Button>
-        <Button Color="ButtonColor.Primary" @onclick="newClient">Submit File</Button>
-    </FooterTemplate>
-</Modal>
 
 
 <div class="w-100 h-100 d-flex justify-content-center">
@@ -196,25 +91,6 @@
     </RadzenStack>);
     }
 
-    IEnumerable<Client> clients1;
-    int value;
-    int count;
-
-    void LoadData(LoadDataArgs args)
-    {
-        var query = clients.AsQueryable();
-
-        if (!string.IsNullOrEmpty(args.Filter))
-        {
-            query = query.Where(c => c.FirstNames.ToLower().Contains(args.Filter.ToLower()) || c.LastName.ToLower().Contains(args.Filter.ToLower()));
-        }
-
-        count = query.Count();
-
-        clients = query.Skip(args.Skip.HasValue ? args.Skip.Value : 0).Take(args.Top.HasValue ? args.Top.Value : 10).ToList();
-
-        InvokeAsync(StateHasChanged);
-    }
 
 
 
@@ -228,193 +104,20 @@
 
 
 
-    int radioButtonValue;
-    double bill;
-    RadzenDropDown<string> radzenDropDown;
-    int clientPhoneNumber;
-    string dropDownDataGridValue = "";
-    private string client = "";
-    private string title = "";
-    private string display = "d-none";
-    private Modal? existingClientFileModal = new();
-    private Modal? newClientFileModal = new();
-    public int Id { get; set; }
-    public required string FirstNames { get; set; }
-    public required string LastName { get; set; }
-    public required string Email { get; set; }
-    public required string fileID { get; set; }
-    public required string CurrentCompany = "Ikanga Legal Practitioners";
-
-    List<Client> clients = new List<Client>
-    {
-        new Client
-        {
-            Id = 1,
-            FirstNames = "John",
-            LastName = "Knox",
-            FullName = "John Knox",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 2,
-            FirstNames = "Tim",
-            LastName = "Cook",
-            FullName = "Tim Cook",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 3,
-            FirstNames = "Ben",
-            LastName = "White",
-            FullName = "Ben White",            
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 4,
-            FirstNames = "Aben",
-            LastName = "Mith",
-            FullName = "Aben Mith",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 5,
-            FirstNames = "Shantell",
-            LastName = "Johnson",
-            FullName = "Shantell Johnson",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 6,
-            FirstNames = "Candice",
-            LastName = "Karyenda",  
-            FullName = "Candice Karyenda",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 7,
-            FirstNames = "Mary",
-            LastName = "Abel",
-            FullName = "Mary Abel",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 8,
-            FirstNames = "Will",
-            LastName = "Smith",
-            FullName = "Will Smith",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-        new Client
-        {
-            Id = 9,
-            FirstNames = "Dwayne",
-            LastName = "Johnson",
-            FullName = "Dwayne Johnson",
-            Email = "jknox@gmail.com",
-            CurrentCompany = "Ikanga Legal Practitioners",
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        },
-    };
 
 
 
-    public async Task newClient()
-    {
-        HttpClient httpClient = new HttpClient();
-        Client clientData = new Client
-        {
-            Id = Id,
-            FirstNames = FirstNames,
-            LastName = LastName,
-            FullName = FirstNames + " " + LastName,
-            Email = Email,
-            CurrentCompany = CurrentCompany,
-            TitleOfCourtesy = "Mr",
-            City = "Windhoek",
-            Country = "Namibia"
-        };
-        var jsonObj = Newtonsoft.Json.JsonConvert.SerializeObject(clientData);
-        var content = new StringContent(jsonObj, System.Text.Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PostAsync("https://localhost:7282/api/Client", content);
-        await newClientFileModal.HideAsync();
-        Console.WriteLine(response.StatusCode);
-        Console.WriteLine(response.ToString());
-        Console.WriteLine(response.Content);
-        Console.WriteLine(response.IsSuccessStatusCode);
-        // Check if the request was successful
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine("Client data posted successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Failed to post client data. Status code: " + response.StatusCode);
-        }
-    }
 
-    private async Task OnShowNewClientFileModalClick()
-    {
-        await newClientFileModal.ShowAsync();
-    }
-    private async Task OnShowExistingClientFileModalClick()
-    {
-        await existingClientFileModal.ShowAsync();
-    }
 
-    private async Task OnHideNewClientModalClick()
-    {
-        await newClientFileModal.HideAsync();
-    }
-    private async Task OnHideExistingClientModalClick()
-    {
-        await existingClientFileModal.HideAsync();
-    }
 
-    private void showPopover()
-    {
-        display = (display == "d-none") ? "d-block" : "d-none";
-    }
+
+
+
+
+
+
+
+
 
     IEnumerable<String> titleList = new List<string>()
     {

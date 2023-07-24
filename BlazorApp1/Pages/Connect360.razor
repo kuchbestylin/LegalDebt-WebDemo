@@ -1,0 +1,100 @@
+﻿@page "/connect360"
+
+
+<div class="w-100 mt-5 text-theme justify-content-center d-flex flex-column align-items-center">
+    <Modal @ref="modal" title="Schedule text message" Size="ModalSize.Large" UseStaticBackdrop="false">
+        <BodyTemplate>
+            <div class="mb-4 mx-4 mt-2">
+                <Connect360MultipleSelect></Connect360MultipleSelect>
+            </div>
+            <div class="mb-4 mx-4">
+                <RadzenFormField class="w-100" Style="font-size:0.8em" Text="TextMessage" Variant="Variant.Outlined">
+                    <RadzenTextArea Style="height: 7em" @bind-Value="@message" />
+                </RadzenFormField>
+            </div>
+            <div class="mx-4 mb-4">
+                <RadzenFormField Text="Select Date">
+                    <RadzenDatePicker @bind-Value=@date ShowTime="true" ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="MM/dd/yyyy HH:mm" />
+                </RadzenFormField>
+            </div>
+        </BodyTemplate>
+        <FooterTemplate>
+            <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
+            <Button Class="px-4 ms-2" Color="ButtonColor.Primary">Confirm</Button>
+        </FooterTemplate>
+    </Modal>
+    <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Type a new Message and Schedule it</Button>
+    <div class="col-12 mt-5 d-flex gap-4 justify-content-center">
+        <div class="p-5 d-flex position-relative flex-column gap-3 col-12 col-md-4 col-lg-3 " style="box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);">
+            <Icon Class="edit-button" Name="IconName.PencilSquare" Style="position:absolute; top:0.7em; right:1.2em; font-size:1.1em"></Icon>
+            <h5 class="fw-bold">Broadcast Message</h5>
+            <p>Hie all, please be reminded to pay all your bills</p>
+            <RadzenDatePicker @bind-Value=@date ShowTime="true" Disabled ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="ddd d MMM HH:mm" />
+            <Button Class="mt-3" Color="ButtonColor.Danger" @onclick="ShowConfirmationAsync"> Delete Message </Button>
+        </div>
+        <div class="p-5 d-flex position-relative flex-column gap-3 col-12 col-md-4 col-lg-3 " style="box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);">
+            <Icon Class="edit-button" Name="IconName.PencilSquare" Style="position:absolute; top:0.7em; right:1.2em; font-size:1.1em"></Icon>
+            <h5 class="fw-bold">Broadcast Message</h5>
+            <p>Hie all, please be reminded to pay all your bills</p>
+            <RadzenDatePicker @bind-Value=@date ShowTime="true" Disabled ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="ddd d MMM HH:mm" />
+            <Button Class="mt-3" Color="ButtonColor.Danger" @onclick="ShowConfirmationAsync"> Delete Message </Button>
+        </div>
+        <div class="p-5 d-flex position-relative flex-column gap-3 col-12 col-md-4 col-lg-3 " style="box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);">
+            <Icon Class="edit-button" Name="IconName.PencilSquare" Style="position:absolute; top:0.7em; right:1.2em; font-size:1.1em"></Icon>
+            <h5 class="fw-bold">Broadcast Message</h5>
+            <p>Hie all, please be reminded to pay all your bills</p>
+            <RadzenDatePicker @bind-Value=@date ShowTime="true" Disabled ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="ddd d MMM HH:mm" />
+            <Button Class="mt-3" Color="ButtonColor.Danger" @onclick="ShowConfirmationAsync"> Delete Message </Button>
+        </div>
+    </div>
+    <ConfirmDialog @ref="dialog" />
+</div>
+
+
+@code {
+    PreloadService PreloadService = new PreloadService();
+    DateTime? date = DateTime.Now;
+    string message = "";
+    private Modal modal;
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+    }
+
+    List<BroadcastTextMessage> broadcastTextMessages = new List<BroadcastTextMessage>
+    {
+        new BroadcastTextMessage{ Id= 1, CellNumbers = new List<int>{}, Message = "Heyy there", date = DateTime.Now},
+        new BroadcastTextMessage{ Id= 2, CellNumbers = new List<int>{}, Message = "Heyy there", date = DateTime.Now},
+        new BroadcastTextMessage{ Id= 3, CellNumbers = new List<int>{}, Message = "Heyy there", date = DateTime.Now},
+    };
+    private ConfirmDialog dialog;
+
+    private async Task ShowConfirmationAsync()
+    {
+        var confirmation = await dialog.ShowAsync(
+            title: "Are you sure you want to delete this?",
+            message1: "This will delete the record. Once deleted can not be rolled back.",
+            message2: "Do you want to proceed?");
+
+        if (confirmation)
+        {
+            await ShowSpinnerAsync(SpinnerColor.Success);
+        }
+        else
+        {
+            await ShowSpinnerAsync(SpinnerColor.Success);
+        }
+    }
+    private async Task ShowSpinnerAsync(SpinnerColor spinnerColor)
+    {
+        PreloadService.Show(spinnerColor);
+
+        await Task.Delay(3000); // call the service/api
+
+        PreloadService.Hide();
+    }
+}

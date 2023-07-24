@@ -1,0 +1,103 @@
+﻿<div class="mt-4">
+    <div class="w-100 d-flex flex-wrap" style="height: 60vh;">
+        <div class="col-3 offset-1 flex-column">
+            <nav class="flex-column  d-flex gap-3">
+                <a class="nav-link @((ShowGeneral) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = true; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = false; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Name="IconName.HouseDoor" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">General</span>
+                </a>
+                <a class="nav-link @((ShowAccount) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = true; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.Person" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Account</span>
+                </a>
+                <a class="nav-link @((ShowPrivacy) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = true; ShowAccount = false; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.Lock" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Privacy</span>
+                </a>
+                <a class="nav-link @((ShowNotifications) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = false; ShowNotifications = true; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.Bell" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Notifications</span>
+                </a>
+                <a class="nav-link @((ShowAccessibility) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = true; ShowPrivacy = false; ShowAccount = false; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.UniversalAccessCircle" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Accessibility</span>
+                </a>
+                <a class="nav-link @((ShowFileCategories) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = false; ShowNotifications = false; ShowFileCategories = true; ShowAppPermissions = false; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.Check2Circle" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Case Categories</span>
+                </a>
+                <a class="nav-link @((ShowAppPermissions) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = false; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = true; ShowReport = false;})">
+                    <Icon Class="" Name="IconName.ShieldLock" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">App Permissions</span>
+                </a>
+                <a class="nav-link @((ShowReport) ? "active-shadow" : "") on-hover-mouse d-flex justify-content-start gap-2 align-items-center"
+                         @onclick="@(() => {ShowGeneral = false; ShowAccessibility = false; ShowPrivacy = false; ShowAccount = false; ShowNotifications = false; ShowFileCategories = false; ShowAppPermissions = false; ShowReport = true;})">
+                    <Icon Class="" Name="IconName.ExclamationDiamond" style="font-size:1.1em"></Icon>
+                    <span style="font-size:0.8em; letter-spacing:0.1em" class="m-0">Report</span>
+                </a>
+            </nav>
+        </div>
+            <div class="row col-7">
+                <div class="" style="height: 35em; overflow-y:scroll">
+                    @if (ShowGeneral)
+                    {
+                        <h3>General Settings</h3>
+                        <p>Some general settings here...</p>
+                    }
+                    else if (ShowAccessibility)
+                    {
+                        <h3>Accessibility Settings</h3>
+                        <p>Some accessibility settings here...</p>
+                    }
+                    else if (ShowPrivacy)
+                    {
+                        <h3>Privacy Policy</h3>
+                        <PrivacyPolicy></PrivacyPolicy>
+                    }
+                    else if (ShowAccount)
+                    {
+                        <h3>Account Settings</h3>
+                        <p>Some privacy settings here...</p>
+                    }
+                    else if (ShowNotifications)
+                    {
+                        <h3>Notifications Settings</h3>
+                        <p>Some privacy settings here...</p>
+                    }
+                    else if (ShowFileCategories)
+                    {
+                        <h3>File Categories Settings</h3>
+                        <p>Some privacy settings here...</p>
+                    }
+                    else if (ShowAppPermissions)
+                    {
+                        <h3>App Permissions Settings</h3>
+                        <p>Some privacy settings here...</p>
+                    }
+                    else if (ShowReport)
+                    {
+                        <h3>Report Settings</h3>
+                        <p>Some privacy settings here...</p>
+                    }
+                </div>
+            </div>
+    </div>
+</div>
+
+@code {
+    public bool ShowGeneral = true;
+    private bool ShowAccessibility = false;
+    private bool ShowPrivacy = false;
+    private bool ShowAccount = false;
+    private bool ShowNotifications = false;
+    private bool ShowFileCategories = false;
+    private bool ShowAppPermissions = false;
+    private bool ShowReport = false;
+}
