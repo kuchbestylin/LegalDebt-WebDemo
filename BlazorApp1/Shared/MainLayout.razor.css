@@ -1,9 +1,0 @@
-.sb {
-    background-color:black;
-    opacity: 1;
-    width: 60px !important;
-}
-
-.sb:hover {
-    transition-duration: 0.5s;
-}
