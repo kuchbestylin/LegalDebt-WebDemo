@@ -1,0 +1,26 @@
+﻿body {
+}
+
+@media (min-width: 576px) {
+    .message-box {
+        width: 48%;
+    }
+}
+
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+    .message-box {
+        width: 32%;
+    }
+}
+
+
+@media (min-width: 1200px) {
+}
+
+
+@media (min-width: 1400px) {
+}

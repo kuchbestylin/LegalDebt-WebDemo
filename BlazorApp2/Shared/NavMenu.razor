@@ -1,0 +1,57 @@
+﻿<div style="" class="pt-3 h-100 d-flex flex-column justify-content-between">
+    <nav class="flex-column d-flex g-4 gap-4 flex-grow-1">
+        <NavLink class="text-white nav-link link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="" Match="NavLinkMatch.All">
+            <Icon Name="IconName.HouseDoor" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Home</span>
+        </NavLink>
+        <NavLink class="text-white nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="clientlookup">
+            <Icon Class="" Name="IconName.Search" style="font-size: 1.2em"></Icon> 
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Lookup</span>
+        </NavLink>
+        <NavLink class="text-white nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="analytics">
+            <Icon Class="" Name="IconName.Activity" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Analytics</span>
+        </NavLink>
+        <NavLink class="text-white nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="connect360">
+            <Icon Class="" Name="IconName.EnvelopeCheck" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">C360</span>
+        </NavLink>
+        <NavLink class="text-white nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="storage">
+            <Icon Class="" Name="IconName.Clouds" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Files</span>
+        </NavLink>
+        <NavLink class="text-white nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="violaai">
+            <Icon Class="" Name="IconName.Geo" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">ViolaAI</span>
+        </NavLink>
+    </nav>
+    <ul class="d-flex m-0 flex-column align-items-center list-unstyled mx-2" style="border-top: 1px solid rgba(255,255,255,0.5);">
+        <li class="nav-item w-100 h-100 d-flex justify-content-center">
+            <a @onclick="OnShowModalClick" class=" p-2 text-white">
+                <Icon Class="" Name="IconName.Gear" Size="IconSize.x4"></Icon>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="w-100 h-100 d-flex justify-content-center">
+    <Modal Class="text-dark h-100" @ref="modal" title="Settings" Size="ModalSize.Large" UseStaticBackdrop="true">
+        <BodyTemplate>
+            <Settings></Settings>
+        </BodyTemplate>
+    </Modal>
+</div>
+@code {
+
+    private BlazorBootstrap.Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+}

@@ -1,85 +1,77 @@
-﻿@page "/newfile/newclient"
+﻿<div class="row d-flex mb-3 justify-content-center">
+    <form class="col-8" style="">
+        <section class="d-flex w-100 mb-3 flex-column gap-4  pt-3">
 
-<div class="row d-flex justify-content-center">
-    <form class="p-5 col-7 mt-5" style="">
-        <section class="d-flex w-100 mb-3 flex-column gap-3">
-            <div class="col-12 mb-4 gap-5 d-flex justify-content-center">
-                <div class="fw-bold p-0 fs-5 text-decoration-underline off-white col-12 col-md-6">
-                    OPEN NEW FILE
-                </div>
-                <div class="d-none d-md-block col-3"></div>
-            </div>
-            <div class="col-12 gap-5 d-flex justify-content-center">
-                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Class="col-12 col-md-6 m-0">
+            <div class="col-12 d-flex justify-content-center">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Class="col-12 col-sm-6 col-md-4" Style="">
                     <RadzenSelectBar @bind-Value="@variant" TextProperty="Text" ValueProperty="Value" Data="@(Enum.GetValues(typeof(Variant)).Cast<Variant>().Select(t => new { Text = $"{t}", Value = t }))" Size="ButtonSize.Small" Class="rz-display-none rz-display-xl-flex" />
                     <RadzenDropDown @bind-Value=@caseTypes Data=@caseCategories TextProperty="Name" ValueProperty="Id"
-                                    Multiple=true AllowClear=true Placeholder="Applicable Categories" Chips=true Style="width: 100%; max-width: 400px;" />
+                                    Multiple=true AllowClear=true Placeholder="Category" Chips=true Style="width: 100%; max-width: 400px;" />
                 </RadzenStack>
-                <div class="d-none d-md-block col-3"></div>
             </div>
-            <div class="w-100 d-flex gap-4 justify-content-center">
-                <div class="col-3 overflow-hidden">
-                    <RadzenFormField>
+            <div class="w-100 d-flex gap-md-2 justify-content-between">
+                <div class="col-12 col-sm-6 col-md-4 overflow-hidden">
+                    <RadzenFormField class="w-100">
                         <RadzenDropDown class="px-0 ps-3" TValue="string" Value=@title Data=@titles Change="@(args => title = $"{args}")" Style="width:100%; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="FirstName" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="LastName" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
             </div>
-            <div class="w-100 d-flex gap-4 justify-content-center">
-                <div class="col-12 col-md-3">
+            <div class="w-100 d-flex gap-md-2 justify-content-between">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Clients Email" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="PhoneNumber" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenMask Mask="(***) **-***-****" CharacterPattern="[0-9]" Placeholder="(000) 000-0000" Name="Phone" @bind-Value=@phoneNumber Change=@(args => phoneNumber = args) Style="width: 100%; max-width: 400px; height: 35px; font-size:1.2em" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="BirthDate" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenDatePicker class="py-0" @bind-Value=@birthDay DateFormat="MM/dd/yyyy" Style="height: 35px; max-width: 400px;" />
                     </RadzenFormField>
                 </div>
             </div>
-            <div class="w-100 d-flex gap-4 justify-content-center">
-                <div class="col-12 col-md-3">
+            <div class="w-100 d-flex gap-md-2 justify-content-between">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="File ID" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Amount to be Paid" Style="width: 100%;">
                         <RadzenNumeric Style="font-size:0.7em; height: 35px; max-width: 400px;" TValue="double" Format="N$ ###" @bind-Value=@amountToBePaid />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Total Paid" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenNumeric Style="font-size:0.7em; max-width: 400px; height: 35px" TValue="double" Format="N$ ###" @bind-Value=@amountPaid />
                     </RadzenFormField>
                 </div>
             </div>
-            <div class="w-100 d-flex gap-4 justify-content-center">
-                <div class="col-12 col-md-3">
+            <div class="w-100 d-flex gap-md-2 justify-content-between">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="City" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Region" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Country of Origin" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>

@@ -1,0 +1,99 @@
+﻿@page "/analytics"
+
+<div class="container-fluid pb-5">
+    <h2 class="mt-2 mb-3 m-0 fw-bolder">Analytics Overview</h2>
+    <section class="d-flex flex-column text-theme gap-4" style="">
+        <div class="d-flex justify-content-sm-between justify-content-between flex-wrap gap-2">
+            <div class="p-1 col-12 col-sm-3 col-lg-2 col-xl-1" style="background-color: rgba(255, 0, 0, 0.3); min-height: 8.5em; box-shadow: 1px -1px 5px 0px rgba(0, 0, 0, 0.8);border-radius: 20px; min-width: 16em">
+                <div>
+                    <div class="text-end pe-3 pt-1"><Icon Class="m-0 fw-bold p-0" Style="color:black" Name="IconName.ArrowUpRightCircleFill"></Icon></div>
+                    <div class="text-center fs-1 mt-2 fw-bold" style="line-height:0.4em">7</div>
+                </div>
+                <div class="text-center mt-3 fw-bolder" style="font-size: 0.9em"><strong class="text-decoration-underline">Severe Debt</strong></div>
+                <div class="text-center" style="font-size: 0.8em">10% Increase from Last Week</div>
+            </div>
+            <div class="p-1 col-12 col-sm-3 col-lg-2 col-xl-1" style="background-color: rgba(255, 255, 0, 0.3); min-height: 8.5em; box-shadow: 1px -1px 5px 0px rgba(0, 0, 0, 0.8);border-radius: 20px; min-width: 16em">
+                <div>
+                    <div class="text-end pe-3 pt-1"><Icon Class="m-0 fw-bold p-0" Style="color:black" Name="IconName.ArrowUpRightCircleFill"></Icon></div>
+                    <div class="text-center fs-1 mt-2 fw-bold" style="line-height:0.4em">12</div>
+                </div>
+                <div class="fw-bold text-center mt-3" style="font-size: 0.9em"><strong class="text-decoration-underline">Significant Debt</strong></div>
+                <div class="text-center" style="font-size: 0.8em">10% Increase from Last Week</div>
+            </div>
+            <div class="p-1 col-12 col-sm-3 col-lg-2 col-xl-1" style="background-color: rgba(0, 0, 255, 0.3); min-height: 8.5em; box-shadow: 1px -1px 5px 0px rgba(0, 0, 0, 0.8);border-radius: 20px; min-width: 16em">
+                <div>
+                    <div class="text-end pe-3 pt-1"><Icon Class="m-0 fw-bold p-0" Style="color:black" Name="IconName.ArrowUpRightCircleFill"></Icon></div>
+                    <div class="text-center fs-1 mt-2 fw-bold" style="line-height:0.4em">2</div>
+                </div>
+                <div class="fw-bold text-center mt-3" style="font-size: 0.9em"><strong class="text-decoration-underline">Moderate Debt</strong></div>
+                <div class="text-center" style="font-size: 0.8em">10% Increase from Last Week</div>
+            </div>
+            <div class="p-1 col-12 col-sm-3 col-lg-2 col-xl-1" style="background-color: rgba(0 , 255, 0, 0.3); min-height: 8.5em; box-shadow: 1px -1px 5px 0px rgba(0, 0, 0, 0.8);border-radius: 20px; min-width: 16em">
+                <div>
+                    <div class="text-end pe-3 pt-1"><Icon Class="m-0 fw-bold p-0" Style="color: black" Name="IconName.ArrowUpRightCircleFill"></Icon></div>
+                    <div class="text-center fs-1 mt-2 fw-bold" style="line-height:0.4em">36</div>
+                </div>
+                <div class="fw-bold text-center mt-3" style="font-size: 0.9em"><strong class="text-decoration-underline">Partial Payments</strong></div>
+                <div class="text-center" style="font-size: 0.8em">10% Increase from Last Week</div>
+            </div>
+            <div class="p-1 col-12 col-sm-3 col-lg-2 col-xl-1" style="background-color: rgba(0, 128, 0, 0.3); min-height: 8.5em; box-shadow: 1px -1px 5px 0px rgba(0, 0, 0, 0.8);border-radius: 20px; min-width: 16em">
+                <div>
+                    <div class="text-end pe-3 pt-1"><Icon Class="m-0 fw-bold p-0" Style="color: black" Name="IconName.ArrowDownRightCircleFill"></Icon></div>
+                    <div class="text-center fs-1 mt-2 fw-bold" style="line-height:0.4em">134</div>
+                </div>
+                <div class="fw-bold text-center mt-3" style="font-size: 0.9em"><strong class="text-decoration-underline">No Outstanding Debt</strong></div>
+                <div class="text-center" style="font-size: 0.8em">10% Increase from Last Week</div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap flex-lg-nowrap justify-content-around align-items-center">
+            <div style="box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);" class="d-flex pie-chart-card flex-column gap-2 pt-4">
+                <label class="fs-4 text-dark text-decoration-underline w-100 text-center">Number of Files by Category</label>
+                <PieChartComponent></PieChartComponent>
+            </div>
+
+            <div class="pt-4 my-3 flex-grow-1 miscelleneous-overview" style="box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1); height: 432px;">
+                <label class="fs-4 text-dark text-decoration-underline w-100 text-center mb-4">Miscelleneous Overview</label>
+                <div class="mb-2 justify-content-center flex-column gap-4 d-flex py-2 mx-4">
+                    <div style="height:2.8em; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1); background-color: darkolivegreen; color: black; border-radius: 6px" class="d-flex align-items-center px-2 justify-content-between mb-2">
+                        <div class="">
+                            <Icon Name="IconName.Circle" Style="font-size:0.6em"></Icon>
+                            <RadzenLabel class="fw-bold fs-6">Total Debt</RadzenLabel>
+                        </div>
+                        <RadzenLabel Style="background-color:rgba(0,0,0,0.2); border-radius: 40px" class="px-4 fw-bold py-1">N$ 32,243</RadzenLabel>
+                    </div>
+                    <div style="height:2.8em; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1); background-color: aqua; color: black; border-radius: 6px" class="d-flex align-items-center px-2 justify-content-between mb-2">
+                        <div>
+                            <Icon Name="IconName.Circle" Style="font-size:0.6em"></Icon>
+                            <RadzenLabel class="fw-bold">Average Time to Recovery</RadzenLabel>
+                        </div>
+                        <RadzenLabel Style="background-color:rgba(0,0,0,0.2); border-radius: 40px" class="px-4 fw-bold py-1">2-Mos</RadzenLabel>
+                    </div>
+                    <div style="height:2.8em; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1); background-color:coral; color: black; border-radius: 6px" class="d-flex align-items-center px-2 justify-content-between mb-2">
+                        <div>
+                            <Icon Name="IconName.Circle" Style="font-size:0.6em"></Icon>
+                            <RadzenLabel class="fw-bold">Average Debt Per Client</RadzenLabel>
+                        </div>
+                        <RadzenLabel Style="background-color:rgba(0,0,0,0.2); border-radius: 40px" class="px-4 fw-bold py-1">N$ 343</RadzenLabel>
+                    </div>
+                    <div style="height:2.8em; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1); background-color:aquamarine; color: black; border-radius: 6px" class="d-flex align-items-center px-2 justify-content-between mb-2">
+                        <div>
+                            <Icon Name="IconName.Circle" Style="font-size:0.6em"></Icon>
+                            <RadzenLabel class="fw-bold">Number of Clients Outstanding</RadzenLabel>
+                        </div>
+                        <RadzenLabel Style="background-color:rgba(0,0,0,0.2); border-radius: 40px" class="px-4 fw-bold py-1">8</RadzenLabel>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1)" class="">
+                <label class="fs-4 mt-2 mb-4 w-100 text-center text-dark text-decoration-underline">Year of 2023 (Revenue Analysis)</label>
+                <BarChartComponent></BarChartComponent>
+            </div>
+        </div>
+    </section>
+</div>

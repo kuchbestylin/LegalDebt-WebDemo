@@ -13,9 +13,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\CaseCategory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Class1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Collection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Company.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CompletionMessageParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Conversation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ConversationMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\LegalFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ScheduledMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TwilioService.cs" />
   </ItemGroup>
   <ItemGroup>

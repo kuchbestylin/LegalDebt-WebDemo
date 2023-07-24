@@ -1,47 +1,53 @@
-﻿<div style="" class="pt-3">
-    <nav class="flex-column d-flex g-4 gap-4">
+﻿<div style="" class="pt-3 h-100 d-flex flex-column justify-content-between">
+    <nav class="flex-column d-flex g-4 gap-4 flex-grow-1">
         <NavLink class="nav-link link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="" Match="NavLinkMatch.All">
-            <Icon Name="IconName.HouseDoor" Size="IconSize.x4"></Icon>
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Home</span>
+            <Icon Name="IconName.HouseDoor" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Home</span>
         </NavLink>
         <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="clientlookup">
-            <Icon Class="" Name="IconName.Search" Size="IconSize.x5"></Icon> 
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Lookup</span>
+            <Icon Class="" Name="IconName.Search" style="font-size: 1.2em"></Icon> 
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Lookup</span>
         </NavLink>
         <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="analytics">
-            <Icon Class="" Name="IconName.Activity" Size="IconSize.x4"></Icon>
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Analytics</span>
+            <Icon Class="" Name="IconName.Activity" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">Analytics</span>
         </NavLink>
         <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="connect360">
-            <Icon Class="" Name="IconName.EnvelopeCheck" Size="IconSize.x4"></Icon>
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Connect360</span>
+            <Icon Class="" Name="IconName.EnvelopeCheck" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">C360</span>
         </NavLink>
         <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="violaai">
-            <Icon Class="" Name="IconName.Geo" Size="IconSize.x4"></Icon>
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">ViolaAI</span>
-        </NavLink>
-        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="/newfile/existingclient">
-            <Icon Class="" Name="IconName.UiChecksGrid" Size="IconSize.x4"></Icon> 
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Add File</span>
-        </NavLink>
-        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="/newfile/newclient">
-            <Icon Class="" Name="IconName.PersonPlus" Size="IconSize.x4"></Icon>
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">New File</span>
-        </NavLink>
-        <NavLink class="nav-link p-0 flex-column d-flex justify-content-start align-items-center" style="line-height: 1.2em" href="userlogin">
-            <Icon Class="" Name="IconName.Person" Size="IconSize.x4"></Icon> 
-            <span style="font-size:0.7em; letter-spacing:0.1em" class="m-0">Login</span>
+            <Icon Class="" Name="IconName.Geo" style="font-size: 1.2em"></Icon>
+            <span style="font-size:0.6em; letter-spacing:0.1em" class="m-0">ViolaAI</span>
         </NavLink>
     </nav>
+    <ul class="d-flex m-0 flex-column align-items-center list-unstyled mx-2" style="border-top: 1px solid rgba(255,255,255,0.5);">
+        <li class="nav-item w-100 h-100 d-flex justify-content-center">
+            <a @onclick="OnShowModalClick" class=" p-2 text-white">
+                <Icon Class="" Name="IconName.Gear" Size="IconSize.x4"></Icon>
+            </a>
+        </li>
+    </ul>
 </div>
 
+<div class="w-100 h-100 d-flex justify-content-center">
+    <Modal Class="text-dark h-100" @ref="modal" title="Settings" Size="ModalSize.Large" UseStaticBackdrop="true">
+        <BodyTemplate>
+            <Settings></Settings>
+        </BodyTemplate>
+    </Modal>
+</div>
 @code {
-    private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private BlazorBootstrap.Modal modal = default!;
 
-    private void ToggleNavMenu()
+    private async Task OnShowModalClick()
     {
-        collapseNavMenu = !collapseNavMenu;
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
     }
 }

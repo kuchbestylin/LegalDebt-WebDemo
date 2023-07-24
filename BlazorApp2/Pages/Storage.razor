@@ -1,0 +1,217 @@
+﻿@page "/storage"
+@using System.IO
+
+
+<div class="">
+    <div class="ms-5 my-2">
+        
+        <ul>
+            <li id="Areas">
+                <div class="d-flex align-items-center">
+                    <Icon Class="me-3" Name="iconNameRight1" @onclick='() => { iconNameRight1 = (iconNameRight1 == IconName.ChevronDown) ? IconName.ChevronRight : IconName.ChevronDown; AreasList = (AreasList == "d-none") ? "d-block" : "d-none";}'></Icon>
+                    <Icon Class="me-2" Name="IconName.FolderFill" Size="IconSize.x4"></Icon>
+                    <label>Areas</label>
+                </div>
+                <ul id="Root" class="ms-1 @AreasList">
+                    @foreach(var item in root.Items)
+                    {
+                        if (item is File)
+                        {
+                            <li id="@item.Name" class="d-none">
+                                <div class="d-flex align-items-center">
+                                    <div style="width: 23px"></div>
+                                    <Icon Class="me-2" Name="IconName.FileEarmarkFill" Size="IconSize.x4"></Icon>
+                                    <label>@item.Name</label>
+                                </div>
+                            </li>
+                        }
+                        else if (item is Directory)
+                        {
+                            <li id="@item.Name" class="">
+                                <div class="d-flex align-items-center">
+                                    <Icon Style=" width: 23px" Class="me-3" Name="iconNameRightHome" @onclick='() => { iconNameRightHome = (iconNameRightHome == IconName.ChevronDown) ? IconName.ChevronRight : IconName.ChevronDown; HomeList = (HomeList == "d-none") ? "d-block" : "d-none"; }'></Icon>
+                                    <Icon Class="me-2" Name="IconName.FolderFill" Size="IconSize.x4"></Icon>
+                                    <label>@item.Name</label>
+                                </div>
+                                <ul id="@item.Name" class="ms-2 @HomeList">
+                                    @foreach (var subItem in ((Directory)item).Items)
+                                    {
+                                        if (subItem is File)
+                                        {
+                                            <li id="@subItem.Name" class="">
+                                                <div class="d-flex align-items-center">
+                                                    <div style="width: 2.04em"></div>
+                                                    <Icon Class="me-2" Name="IconName.FileEarmarkFill" Size="IconSize.x4"></Icon>
+                                                    <label>@subItem.Name</label>
+                                                </div>
+                                            </li>
+                                        }
+                                        else if (subItem is Directory)
+                                        {
+                                            <li id="@subItem.Name" class="">
+                                                <div class="d-flex align-items-center">
+                                                    <Icon Class="me-3" Name="iconNameRight" @onclick="() => { iconNameRight = (iconNameRight == IconName.ChevronDown) ? IconName.ChevronRight : IconName.ChevronDown;}"></Icon>
+                                                    <Icon Class="me-2" Name="IconName.FolderFill" Size="IconSize.x4"></Icon>
+                                                    <label>@subItem.Name</label>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+        </ul>
+
+
+
+    </div>
+
+</div>
+<style>
+    ul {
+    list-style-type: none;
+}
+
+li.file:before {
+    content: "📄 ";
+}
+
+li.directory:before {
+    content: "📁 ";
+}
+</style>
+
+
+@code{
+    public IconName iconNameRight = IconName.ChevronRight;
+    public String AreasList = "d-none";
+    public String HomeList = "d-none";
+    public IconName iconNameRight1 = IconName.ChevronRight;
+    public IconName iconNameRightHome = IconName.ChevronRight;
+
+
+Directory root = new Directory
+{
+    Name = "Root",
+    CreationTime = DateTime.Now,
+    LastAccessTime = DateTime.Now,
+    LastWriteTime = DateTime.Now,
+    Items = new List<FileSystemItem>
+    {
+        
+        new Directory
+        {
+            Name = "Home",
+            CreationTime = DateTime.Now,
+            LastAccessTime = DateTime.Now,
+            LastWriteTime = DateTime.Now,
+            Items = new List<FileSystemItem>
+            {
+                new File
+                {
+                    Name = "File2.txt",
+                    CreationTime = DateTime.Now,
+                    LastAccessTime = DateTime.Now,
+                    LastWriteTime = DateTime.Now,
+                    Size = 2048
+                }
+            }
+        },new Directory
+        {
+            Name = "Matters",
+            CreationTime = DateTime.Now,
+            LastAccessTime = DateTime.Now,
+            LastWriteTime = DateTime.Now,
+            Items = new List<FileSystemItem>
+            {
+                new File
+                {
+                    Name = "File2.txt",
+                    CreationTime = DateTime.Now,
+                    LastAccessTime = DateTime.Now,
+                    LastWriteTime = DateTime.Now,
+                    Size = 2048
+                }
+            }
+        },
+        new Directory
+        {
+            Name = "Closed",
+            CreationTime = DateTime.Now,
+            LastAccessTime = DateTime.Now,
+            LastWriteTime = DateTime.Now,
+            Items = new List<FileSystemItem>
+            {
+                new File
+                {
+                    Name = "File2.txt",
+                    CreationTime = DateTime.Now,
+                    LastAccessTime = DateTime.Now,
+                    LastWriteTime = DateTime.Now,
+                    Size = 2048
+                }
+            }
+        },
+        new Directory
+        {
+            Name = "Billing",
+            CreationTime = DateTime.Now,
+            LastAccessTime = DateTime.Now,
+            LastWriteTime = DateTime.Now,
+            Items = new List<FileSystemItem>
+            {
+                new File
+                {
+                    Name = "File2.txt",
+                    CreationTime = DateTime.Now,
+                    LastAccessTime = DateTime.Now,
+                    LastWriteTime = DateTime.Now,
+                    Size = 2048
+                }
+            }
+        },
+        new Directory
+        {
+            Name = "Temp",
+            CreationTime = DateTime.Now,
+            LastAccessTime = DateTime.Now,
+            LastWriteTime = DateTime.Now,
+            Items = new List<FileSystemItem>
+            {
+                new File
+                {
+                    Name = "File2.txt",
+                    CreationTime = DateTime.Now,
+                    LastAccessTime = DateTime.Now,
+                    LastWriteTime = DateTime.Now,
+                    Size = 2048
+                }
+            }
+        }
+           
+    }
+};
+
+
+
+    public class FileSystemItem
+    {
+        public required string Name { get; set; }
+        public DateTime CreationTime { get; set; }
+        public DateTime LastAccessTime { get; set; }
+        public DateTime LastWriteTime { get; set; }
+    }
+
+    public class File : FileSystemItem
+    {
+        public long Size { get; set; }
+    }
+
+    public class Directory : FileSystemItem
+    {
+        public List<FileSystemItem>? Items { get; set; }
+    }
+}

@@ -1,0 +1,99 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@namespace BlazorApp2.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="BlazorApp2.styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link href="_content/Blazor.Bootstrap/blazor.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/standard-base.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body class="overflow-hidden">
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="_content/Blazor.Bootstrap/blazor.bootstrap.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="js/site.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js" integrity="sha512-gQhCDsnnnUfaRzD8k1L5llCCV6O9HN09zClIzzeJ8OJ9MpGmIlCxm+pdCkqTwqJ4JcjbojFr79rl2F1mzcoLMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <!-- Add chart.js reference if Chart components are used in the application. -->
+    <script>
+        window.scrollIntoViewIfNeeded = function (element) {
+            // check if the element is in the viewport
+            var rect = element.getBoundingClientRect();
+            var isInView = (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= window.innerHeight &&
+                rect.right <= window.innerWidth
+            );
+
+            // if not, scroll it into view
+            if (!isInView) {
+                element.scrollIntoView(false);
+            }
+        };
+    </script>
+    <script>
+        // define a sleep function that returns a promise that resolves after a given time
+        function sleep(time) {
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+
+        // define the function in a javascript file or a script tag
+        window.scrollToSmoothly = function (element, time) {
+            // get the current position and height of the element
+            var currentPos = element.scrollTop;
+            var maxPos = element.scrollHeight + element.clientHeight;
+
+            // get the start time and duration of the animation
+            var startTime = null;
+            var duration = time;
+
+            // request an animation frame
+            window.requestAnimationFrame(async function step(currentTime) {
+                // set the start time if not defined
+                startTime = startTime || currentTime;
+
+                // calculate the progress and elapsed time
+                var progress = currentTime - startTime;
+
+                // calculate the amount to scroll by using an easing function
+                var amount = Math.min(progress / duration, 1) * maxPos;
+
+                // scroll by the amount using the scrollBy method of the element
+                element.scrollBy(0, amount);
+
+                // wait for a small time using the sleep function
+                await sleep(50);
+
+                // request another animation frame if not done or reached the bottom
+                if (progress < duration && element.scrollTop < maxPos) {
+                    window.requestAnimationFrame(step);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

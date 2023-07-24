@@ -1,0 +1,16 @@
+﻿
+
+<div id="my-dropzone" class="dropzone"></div>
+
+@*@code {
+    private Dropzone dropzone;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("createDropzone", "my-dropzone");
+            dropzone = new Dropzone("#my-dropzone");
+        }
+    }
+}*@

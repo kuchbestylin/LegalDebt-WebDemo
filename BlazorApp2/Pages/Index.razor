@@ -1,0 +1,108 @@
+﻿@page "/"
+
+<section class="p-2 p-lg-3">
+    <PageTitle>Index</PageTitle>
+    <div class="d-flex justify-content-around flex-wrap flex-md-nowrap gap-2 ">
+        <div class="d-flex flex-column justify-content-between p-3 col-12 col-sm-5 col-md-2" style="background: linear-gradient(to bottom left, azure, snow); height: 12em; min-width: 16em; background-color: white; border: 1px solid gray; border-radius: 10px;">
+            <div>
+                <span class="bg-white p-2 me-3" style="border-radius: 10px"><Icon Name="IconName.BasketFill" Size="IconSize.x4" Class="text-primary"></Icon></span>
+                <Icon Name="IconName.ArrowUpRightCircleFill" Class="text-success me-1"></Icon>
+                <span class="text-success fs-6">+32.40</span>
+                <span class="text-success">%</span>
+            </div>
+            <div class="fw-bolder fs-4">N$ 42, 302.00</div>
+            <div class="text-secondary fw-bold">Total Sales</div>
+        </div>
+        <div class="d-flex order-md-last flex-column justify-content-between p-3 col-12 col-sm-5 col-md-2" style="background: linear-gradient(to bottom right, azure, white); height: 12em; min-width: 16em; background-color: white; border: 1px solid gray; border-radius: 10px;">
+            <div>
+                <span class="bg-white p-2 me-3" style="border-radius: 10px"><Icon Name="IconName.PieChartFill" Size="IconSize.x4" Class="text-warning"></Icon></span>
+                <Icon Name="IconName.ArrowDownRightCircleFill" Class="text-danger me-1"></Icon>
+                <span class="text-danger fs-6">+10.29</span>
+                <span class="text-danger">%</span>
+            </div>
+            <div class="fw-bolder fs-4">N$ 42, 302.00</div>
+            <div class="text-secondary fw-bold">Total Payables</div>
+        </div>
+        <HomePageArcGuage></HomePageArcGuage>
+    </div>
+
+
+
+    <section class="container">
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            <div class="col-12 text-center mt-5 mb-4 text-decoration-underline"><h2>Color Code Descriptions</h2></div>
+            <div class="col-12  color-code-cards">
+                <div class="justify-content-center align-items-center d-flex" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em; color: green">
+                    <Icon Name="IconName.CheckCircleFill" Class="fs-1" Style="color: green"></Icon>
+                </div>
+                <div class="my-4 mx-2 text-center" style="height: 12em">
+                    <h6>No Outstanding Debt</h6>
+                    <p style="text-align: justify">
+                        Files marked with a green code have no outstanding debt. Client has fulfilled their financial obligations and maintained a good payment history.
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em;">
+                    <button class="text-decoration-none" style="background-color: green; border-radius: 15px; height: 2em; width: 8em; font-weight: 900; color: white; letter-spacing: 1px">LookUp</button>
+                </div>
+            </div>
+            <div class="col-12 color-code-cards">
+                <div class="justify-content-center align-items-center d-flex" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em; color: green">
+                    <Icon Name="IconName.DropletHalf" Class="fs-1" Style="color:Lime"></Icon>
+                </div>
+                <div class="my-4 mx-2 text-center" style="height: 12em">
+                    <h6>Partial Payment</h6>
+                    <p style="text-align: justify">
+                        Files marked with a lime color code have partial payments towards their debt. While Client has taken steps to address their financial obligations, they still have a small outstanding balance remaining.
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em;">
+                    <button class="text-decoration-none" style="background-color: lime; border-radius: 15px; height: 2em; width: 8em; font-weight: 900; color: white; letter-spacing: 1px">LookUp</button>
+                </div>
+            </div>
+            <div class="col-12 color-code-cards">
+                <div class="justify-content-center align-items-center d-flex" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em; color: green">
+                    <Icon Name="IconName.CreditCard2FrontFill" Class="fs-1" Style="color:Blue"></Icon>
+                </div>
+                <div class="my-4 mx-2 text-center" style="height: 12em">
+                    <h6>Moderate Debt</h6>
+                    <p style="text-align: justify">
+                        Files marked with a blue color code have a moderate level of debt. They have an outstanding balance that needs attention, but it is within manageable limits. Proper debt management strategies and proactive communication can help in timely resolution.
+
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em;">
+                    <button class="text-decoration-none" style="background-color: blue; border-radius: 15px; height: 2em; width: 8em; font-weight: 900; color: white; letter-spacing: 1px">LookUp</button>
+                </div>
+            </div>
+            <div class="col-12 color-code-cards">
+                <div class="justify-content-center align-items-center d-flex" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em; color: green">
+                    <Icon Name="IconName.ExclamationCircleFill" Class="fs-1" Style="color:yellow"></Icon>
+                </div>
+                <div class="my-4 mx-2 text-center" style="height: 12em">
+                    <h6>Significant Debt</h6>
+                    <p style="text-align: justify">
+                        Files marked with a yellow color code have significant debt. They have outstanding credit that requires immediate attention and focused efforts for effective debt recovery.
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em;">
+                    <button class="text-decoration-none" style="background-color: yellow; border-radius: 15px; height: 2em; width: 8em; font-weight: 900; color: white; letter-spacing: 1px">LookUp</button>
+                </div>
+            </div>
+            <div class="col-12 color-code-cards">
+                <div class="justify-content-center align-items-center d-flex" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em; color: green">
+                    <Icon Name="IconName.ExclamationTriangleFill" Class="fs-1" Style="color:red"></Icon>
+                </div>
+                <div class="my-4 mx-2 text-center" style="height: 12em">
+                    <h6>Severe Debt</h6>
+                    <p class="mb-2" style="text-align: justify">
+                        Files marked with a red color code have severe debt. They have a critical outstanding balance that demands critical action. Measures need to be taken to mitigate potential financial consequences.
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3); height: 4em;">
+                    <button class="text-decoration-none" style="background-color: red; border-radius: 15px; height: 2em; width: 8em; font-weight: 900; color: white; letter-spacing: 1px">LookUp</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+

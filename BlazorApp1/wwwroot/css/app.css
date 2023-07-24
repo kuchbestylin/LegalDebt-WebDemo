@@ -1,7 +1,37 @@
+* {
+    transition: all 0.4s ease-out;
+}
+@media (min-width: 0px) {
+    .pie-chart-component {
+        width: calc(100vw - 61px - 3.9em);
+    }
+}
+
+
+@media (min-width: 895px) {
+    .pie-chart-component {
+        width: 400px;
+    }
+    .pie-chart-card {
+        height: 432px;
+    }
+    .miscelleneous-overview {
+        max-width: 550px;
+    }
+}
+@media (min-width: 1000px) {
+    .pie-chart-component {
+        width: 500px;
+    }
+}
+@media (min-width: 1200px) {
+    .pie-chart-component {
+        width: 560px;
+    }
+}
 .color-code-cards {
 box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 }
-
 .edit-button {
 color: darkblue;
 }
@@ -12,7 +42,7 @@ cursor: pointer;
 }
 
 .nav-link:hover {
-color: blue !important;
+color: green !important;
 }
 
 .border-red {

@@ -1,0 +1,627 @@
+﻿@page "/violaai"
+@using SharedProject.Services;
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@using UglyToad.PdfPig;
+@using UglyToad.PdfPig.Content;
+@inject IJSRuntime JS
+
+
+
+<div class="h-100 w-100" style="background: repeating-linear-gradient(to top right, blue,blue, palevioletred);">
+    <section class="d-flex flex-column justify-content-center w-100 flex-md-row justify-content-md-between h-100 m-0" style="background-color: rgba(255,255,255,0.9)">
+
+        <aside class="viola-nav pt-3 d-flex flex-column align-items-center" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6); background-color: rgba(0,0,0,0.8); border: 5px solid white">
+
+            <div class="">
+                <div @onclick="OnNewCaseAnalysis" class="onhover-opacity-90 gap-2 fw-bolder d-flex align-items-center justify-content-center" style="height: 3em; width: 12em; box-shadow: +1px -1px 2px 1px rgba(255,255,255,0.3); border: 1px solid white; font-size: 0.9em; background: linear-gradient(to right, navy, darkslateblue); color: rgba(255,255,255,0.8); border-radius: 4px">
+                    <RadzenIcon Icon="add_circle_outline"></RadzenIcon>
+                    CREATE NEW
+                </div>
+            </div>
+            <div class="w-100 mt-4 d-flex flex-column gap-3" style="">
+
+                @foreach (var collection in collections){
+                    <div class="d-flex justify-content-start">
+                        <div class="d-flex me-4 ms-2 justify-content-between align-items-center flex-fill">
+                            <div class="d-flex p-0 align-items-center" style="height: fit-content; cursor: pointer;">
+                                <RadzenIcon Icon="label_important" class="me-2 pb-0" Style="color: snow; font-size: 1.5em"></RadzenIcon>
+                                <RadzenText Text="@collection.Name" Style="font-size: 0.8em; color: silver" class=" m-0 p-0"></RadzenText>
+                            </div>
+                            <RadzenIcon Icon="edit" class="d-none" Style="font-size: 0.8em;"></RadzenIcon>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </aside>
+
+        @code {
+            private List<Collection> collections = new List<Collection>()
+            {
+                // new Collection(){Name = "Timo & Monlisa", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+                // new Collection(){Name = "City of Windohoek", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+                // new Collection(){Name = "Johns Farm Isuue", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+                // new Collection(){Name = "The constituance", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+                // new Collection(){Name = "Research Help", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+                // new Collection(){Name = "Indeed.com", selectedDocs = selectedTexts, selectedTexts = selectedTexts},
+            };
+        }
+
+        <aside id="messagesDiv" class="viola-body d-flex flex-column align-items-center px-4 px-lg-5 col-8 position-relative flex-grow-1" style="height: 100%;">
+
+            <div class="px-5" style="position: absolute; width: 100%; max-width: 60em; top: calc(100vh - 61px - 40px - 2em );">
+                <div class="bg-white d-flex align-items-center px-2" Style="border-radius: 15px;box-shadow: 0px -3px 20px 1px rgba(240, 240, 240, 0.7);">
+                    <RadzenIcon class="mx-2" Icon="message" Style="color: rgba(0,0,0,0.8)"></RadzenIcon>
+                    <InputText class="flex-fill msg-box" @bind-Value="message" @onkeyup="@(async e => { if (e.Key == "Enter") { await submitMessage(message); message = string.Empty; } })" />
+
+                    <RadzenSpeechToTextButton Style="height: auto; color: rgba(0,0,0,0.8); background-color: transparent; box-shadow: none; padding:0; margin: 0" Change="@(args => OnSpeechCaptured(args, true))" />
+                </div>
+            </div>
+            <style>
+                div::-webkit-scrollbar {
+                    width: 0; /* hide the scroll bar */
+                }
+                .msg-box{
+                    border: none;
+                    color: rgba(0,0,0,0.8);
+                    font-size: 0.8em;
+                }
+                .msg-box:focus{
+                    outline: none;
+                }
+
+                .rz-textbox input:focus {
+                    outline: none;
+                }
+
+            </style>
+            <div @ref="myDiv" class="pb-5 w-100" style="overflow: auto; max-height:100%; height: calc(100vh - 61px - 40px - 1em)">
+                <div class="w-100 d-flex justify-content-center">
+                    <RadzenSelectBar Size="ButtonSize.Small" @bind-Value=@isOn TValue="int" class="mb-3">
+                        <Items>
+                            <RadzenSelectBarItem Style="font-size: 0.6em;" Text="GPT-3.5-TURBO" Value="1" />
+                            <RadzenSelectBarItem Style="font-size: 0.6em;" Text="GPT 4" Value="2" />
+                            <RadzenSelectBarItem Style="font-size: 0.6em;" Text="GPT-Turbo-4k" Value="3" />
+                        </Items>
+                    </RadzenSelectBar>
+                </div>
+                <hr style="margin: 0em 10em 1em 10em; height: 0.2px; background-color: black" />
+                @code {
+                    private static bool isMouseIn = false;
+                    private string fileInputClass = (isMouseIn) ? "hover" : "";
+}
+                <style>
+                    ﻿.file-drop-zone {
+                        display: flex;
+                        width: 100%;
+                        border: 3px dotted #fb275d;
+                        align-items: center;
+                        margin-bottom: 2px;
+                    }
+
+                    .file[type=file] {
+                        width: 100%;
+                        height: 100%;
+                        padding: 20px;
+                        background-color: white;
+                        cursor: pointer;
+                        border-radius: 5px;
+                    }
+
+                        .file[type=file]:hover {
+                            opacity: 0.6;
+                            cursor: pointer;
+                        }
+
+                    .nav-button-toggled {
+                        background-color: black;
+                        color: white;
+                    }
+
+                        .nav-button-toggled:hover {
+                            background-color: black;
+                            color: white;
+                            opacity: 0.9;
+                        }
+
+                    .pre-toggle:hover {
+                        opacity: 0.6;
+                    }
+                </style>
+
+                @foreach(var message in collectionMessages)
+                {
+                    if(message.Role == "assistant")
+                    {
+                        <div class="pt-2 px-4 d-flex align-items-center position-relative justify-content-center mt-4" style=" font-size: 0.8em; width: 100%; border-radius: 7px 7px 7px 3px; line-height: 1.7em; letter-spacing: 0.08em; background: linear-gradient(to bottom, midnightblue, navy); color: silver;box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);">
+                            <div class="px-2" style="position: absolute; top:-10px; border-radius: 5px; background: linear-gradient(to bottom right, blue, crimson); font-weight: bolder; color: white">Viola</div>
+                            <p style="" class=" flex-fill">
+                                @message.Content
+                            </p>
+                        </div>
+                    }
+                    else if(message.Role == "user")
+                    {
+                        <div class="pt-2 px-4 d-flex position-relative justify-content-center mt-4" style="font-size: 0.8em; width: 100%; border-radius: 7px 7px 3px 7px; letter-spacing: 0.08em; background: linear-gradient(to bottom, snow, ghostwhite); color: rgba(255,255,255, black);box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);">
+                            <div class="px-2" style="position: absolute; top:-10px; border-radius: 5px; background: linear-gradient(to bottom right, darkkhaki, peachpuff); font-weight: bolder; color: black">You</div>
+                            <p style="text-align: justify; line-height: 1.7em" class="flex-fill border-white">
+                                @message.Content
+                            </p>
+                        </div>
+                    }
+                }
+
+
+
+
+
+            </div>
+        </aside>
+
+        <aside class="viola-nav pt-3" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6); background-color: rgba(0,0,0,0.8); border: 5px solid white">
+            <div class="text-white w-100 px-1 d-flex flex-column align-items-center">
+                <strong class="pt-1">Suggestions</strong>
+                <ul class="list-unstyled d-flex flex-column gap-4 mt-5">
+                    @foreach(var suggestion in suggestions)
+                    {
+                        <li class="d-flex align-items-center">
+                            <RadzenText class="onhover-opacity-90 text-center w-100" style="font-size: 0.8em; line-height: 1.2em; cursor: pointer; color: silver">@suggestion</RadzenText>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </aside>
+
+    </section>
+</div>
+
+
+
+
+@code {
+
+    public async Task submitMessage(string args)
+    {
+        Console.WriteLine(collectionMessages);
+        if(args.Length <= 0)
+        {
+            return;
+        }
+        message = string.Empty;
+        StateHasChanged();
+        var chat = api.Chat.CreateConversation();
+        foreach(var message in collectionMessages)
+        {
+            if (message.Role == "system")
+            {
+                chat.AppendSystemMessage(message.Content);
+            }
+            else if (message.Role == "assistant")
+            {
+                chat.AppendExampleChatbotOutput(message.Content);
+            }
+            else
+                chat.AppendUserInput(message.Content);
+        }
+        Console.WriteLine("c" + chat.Messages);
+        Console.WriteLine("b" + args);
+        chat.AppendUserInput(args);
+        collectionMessages.Add(new ConversationMessage() { Content = args, Role = "user" });
+        var response = await chat.GetResponseFromChatbotAsync();
+        Console.WriteLine("a" + response);
+        collectionMessages.Add(new ConversationMessage() { Role = "assistant", Content = response });
+        StateHasChanged();
+    }
+
+
+    OpenAIAPI api = new OpenAIAPI("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");
+    private List<ConversationMessage> collectionMessages = new List<ConversationMessage>() { };
+
+    List<String> suggestions = new List<string>()
+    {
+        "Who was the winner between the case of City Council?",
+        "What is Legal Debt",
+        "What can I advice my client"
+    };
+
+    private ElementReference myDiv;
+
+    private async Task ScrollDiv()
+    {
+        await JS.InvokeVoidAsync("scrollToSmoothly", myDiv, 300);
+    }
+    ElementReference pageRef;
+    private void onScroll()
+    {
+        pageRef.FocusAsync();
+    }
+    int selectedIndex = 0;
+    private void OnNewCaseAnalysis()
+    {
+        modal.ShowAsync();
+    }
+    void OnClick(RadzenSplitButtonItem item, string buttonName)
+    {
+        if (item != null)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "SplitButton Item Clicked", Detail = $"{buttonName}, item with value {item.Value} clicked" });
+        }
+        else
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "SplitButton Clicked", Detail = $"{buttonName} clicked" });
+        }
+    }
+    int isOn = 1;
+    private ElementReference fileInputRef;
+    String paragraph = ".";
+    private async Task LoadFile(InputFileChangeEventArgs e)
+    {
+        if (!e.File.Name.EndsWith(".pdf"))
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "File Error", Detail = "Only PDF documents Allowed" });
+
+        }
+        var file = e.File;
+        // Create a MemoryStream to hold the file data
+        var memoryStream = new MemoryStream();
+        // Copy the file data to the MemoryStream
+        await file.OpenReadStream(maxAllowedSize: (1024 * 1024 * 5)).CopyToAsync(memoryStream);
+        // Reset the stream position to the beginning for seeking
+        memoryStream.Position = 0;
+        using (PdfDocument document = PdfDocument.Open(memoryStream))
+        {
+            int pageCount = document.NumberOfPages;
+            // Page number starts from 1, not 0.
+            Page page = document.GetPage(1);
+
+            double widthInPoints = page.Width;
+            double heightInPoints = page.Height;
+
+            string text = page.Text;
+            paragraph += text;
+            StateHasChanged();
+            await ScrollDiv();
+            Console.WriteLine(text);
+        }
+    }
+    int violaOffering = 2;
+    IEnumerable<KeyValuePair<int, string>> violaOfferings = new []
+    {
+        new KeyValuePair<int, string>(1,"1. Ask Questions"),
+        new KeyValuePair<int, string>(2,"2. Analyze document"),
+        new KeyValuePair<int, string>(3,"3. Summarize document")
+    };
+    string htmlValue = "";
+    bool busy = false;
+    int count = 0;
+    public async void countdown()
+    {
+        while(count <= 6)
+        {
+            count = count + 1;
+            await Task.Delay(1000);
+        }
+    }
+    string smsVisibility = "d-none";
+    string? service = null;
+    TwilioService TwilioService = new TwilioService();
+    Variant variant = Variant.Outlined;
+    String phoneNumber = "";
+    String message = "";
+    string value = "";
+    List<String> customers = new List<string>()
+    {
+        "SMS","Voice", "Whatsapp", "Email", "Video"
+    };
+
+    public void onDropDown()
+    {
+        if (value.ToLower() == "sms")
+        {
+            value = "sms";
+            smsVisibility = "d-block";
+        }
+    }
+    async Task OnClick()
+    {
+        busy = true;
+        if(message == string.Empty)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Warning, Summary = "Please Type an Appropriate message", Detail = "Inapropriate Message", Duration = 4000 });
+            busy = false;
+            return;
+        }
+        else
+        {
+            CompletionMessageParameter body = new CompletionMessageParameter
+                {
+                    prompts = message
+                };
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.PostAsync("https://localhost:7282/api/OpenAI", new StringContent("\""+message+"\"", System.Text.Encoding.UTF8, "application/json"));
+            string responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
+            htmlValue += "<div>" + responseString + "<div/> <br />";
+        }
+        await Task.Delay(2000);
+        busy = false;
+    }
+    private async void OnClick(string text)
+    {
+        //String status = TwilioService.SendSms(phoneNumber, message);
+        CompletionMessageParameter body = new CompletionMessageParameter
+        {
+            prompts = text
+        };
+        HttpClient httpClient = new HttpClient();
+        var jsonObj = Newtonsoft.Json.JsonConvert.SerializeObject(body);
+        var content = new StringContent(jsonObj, System.Text.Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await httpClient.PostAsync("https://localhost:7282/api/OpenAI", content);
+
+        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = response.Content.ToString(), Detail = response.StatusCode.ToString(), Duration = 100000 });
+
+        //if(status == true)
+        //{
+        //    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Message Sent Successfully", Detail = "Success Detail", Duration = 4000 });
+        //}
+        //else
+        //{
+        //    NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Message Could not be sent", Detail = text });
+        //}
+    }
+    public void renderResponse(HttpResponseMessage response)
+    {
+
+    }
+
+    void OnSpeechCaptured(string speechValue, bool updateTextArea)
+    {
+
+        if (updateTextArea)
+        {
+            message += speechValue;
+        }
+    }
+    private Modal modal = default!;
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+    private string docContent = "d-block";
+    private string docButton = "nav-button-toggled";
+    private string textContent = "d-none";
+    private string textButton = "pre-toggle";
+    private string videoContent = "d-none";
+    private string videoButton = "pre-toggle";
+    private void onAiNavButton(int Id)
+    {
+        if(Id == 1)
+        {
+            docButton = "nav-button-toggled";
+            docContent = "d-block";
+            textButton = "pre-toggle";
+            textContent = "d-none";
+            videoButton = "pre-toggle";
+            videoContent = "d-none";
+
+        }
+        if(Id == 2)
+        {
+            docButton = "pre-toggle";
+            docContent = "d-none";
+            textButton = "nav-button-toggled";
+            textContent = "d-block";
+            videoButton = "pre-toggle";
+            videoContent = "d-none";
+
+        }
+        if(Id == 3)
+        {
+            docButton = "pre-toggle";
+            docContent = "d-none";
+            textButton = "pre-toggle";
+            textContent = "d-none";
+            videoButton = "nav-button-toggled";
+            videoContent = "d-block";
+
+        }
+    }
+    private static List<KeyValuePair<string, string>> selectedTexts = new List<KeyValuePair<string, string>>()
+    {
+    };
+    private String textTitleLabel = "";
+    private String textBodyContent = "";
+    private static List<KeyValuePair<string, string>> selectedDocFiles = new List<KeyValuePair<string, string>>()
+    {
+    };
+    private String docTitle = "";
+    private String docBody = "";
+    private void AddTextResource()
+    {
+        if(textBodyContent.Length < 5 || textTitleLabel == string.Empty)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Warning, Summary = "Error: ", Detail = "Ensure all fields are entered", Duration = 4000 });
+            return;
+        }
+        selectedTexts.Add(new KeyValuePair<string, string>(textTitleLabel, textBodyContent));
+        textBodyContent = string.Empty;
+        textTitleLabel = string.Empty;
+        StateHasChanged();
+    }
+    private Guid inputFileKey = default!;
+    private async Task OnDocResource(InputFileChangeEventArgs e)
+    {
+        if (!e.File.Name.EndsWith(".pdf"))
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "File Error: ", Detail = "Only PDF documents Allowed" });
+            inputFileKey = Guid.NewGuid();
+            return;
+        }
+        var file = e.File;
+        // Create a MemoryStream to hold the file data
+        var memoryStream = new MemoryStream();
+        // Copy the file data to the MemoryStream
+        await file.OpenReadStream(maxAllowedSize: (1024 * 1024 * 5)).CopyToAsync(memoryStream);
+        // Reset the stream position to the beginning for seeking
+        memoryStream.Position = 0;
+        using (PdfDocument document = PdfDocument.Open(memoryStream))
+        {
+            int pageCount = document.NumberOfPages;
+            // Page number starts from 1, not 0.
+            Page page = document.GetPage(1);
+
+            double widthInPoints = page.Width;
+            double heightInPoints = page.Height;
+
+            string text = page.Text;
+            paragraph = text;
+            docTitle = file.Name;
+            docBody = text;
+            selectedDocFiles.Add(new KeyValuePair<string, string>(docTitle, docBody));
+            inputFileKey = Guid.NewGuid();
+            StateHasChanged();
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success: ", Detail = "Document Added." });
+            Console.WriteLine(text);
+        }
+    }
+    private void InitialiseConversationAsync(Collection collection)
+    {
+
+    }
+    private async Task NewCollection()
+    {
+        if(selectedDocFiles.Count <= 0 && selectedTexts.Count <= 0)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error: ", Detail = "No Resources Added." });
+            return;
+        }
+        if(collectionName == string.Empty)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error: ", Detail = "Enter Collection Name." });
+            return;
+        }
+        var collection = new Collection() { Name = collectionName, selectedDocs = selectedDocFiles, selectedTexts = selectedTexts };
+        var conversation = new Conversation() { Messages = new List<ConversationMessage>() { }, CollectionId = collection.Id, Collection = collection };
+        var chat = api.Chat.CreateConversation();
+        string systemPrompt = "You are an assistant for workers of Brandon Legal Practitioners Law Firm. You will assist Brandon with information related to the following files: \n[";
+        foreach(var text in selectedDocFiles)
+        {
+            systemPrompt += "{File-Name: \"" + text.Key;
+            systemPrompt += "\", File-Content: \"" + text.Value + " \"}, ";
+        }
+        foreach(var text in selectedTexts)
+        {
+            systemPrompt += "{Text-Name: \"" + text.Key;
+            systemPrompt += "\", Text-Content: \"" + text.Value + " \"}, ";
+        }
+        chat.AppendSystemMessage(systemPrompt);
+        chat.AppendUserInput("Hie there!");
+        string response = await chat.GetResponseFromChatbotAsync();
+        foreach(var message in chat.Messages) 
+        {
+            conversation.Messages.Add(new ConversationMessage { Role = message.Role, Content = message.Content });
+        }
+
+        collections.Add(collection);
+        collectionMessages = conversation.Messages;
+
+        selectedDocFiles.Clear();
+        selectedTexts.Clear();
+        collectionName = "";
+        InitialiseConversationAsync(collection);
+        StateHasChanged();
+        await modal.HideAsync();
+        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Error: ", Detail = "Collection Added Successfully!" });
+
+
+    }
+    private string collectionName = "";
+}
+
+<Modal @ref="modal" title="Create New Case Analysis" Size="ModalSize.Large" IsVerticallyCentered UseStaticBackdrop="true">
+    <BodyTemplate>
+        <RadzenNotification></RadzenNotification>
+        <RadzenFormField Text="Collection Name" Variant="Variant.Outlined" class="w-100 mb-3" Style="font-size: 0.8em; color: darkslategray">
+            <RadzenTextBox @bind-Value="collectionName" style="font-size: 0.9em"></RadzenTextBox>
+        </RadzenFormField>
+        <div class="d-flex flex-nowrap gap-3" style="">
+            <aside class="col-8 px-3 pb-4" style="background-color: rgba(0,0,0,0.15); border-radius: 7px; box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);">
+                <nav class="my-3">
+                    <ul class="list-unstyled m-0 d-flex justify-content-around">
+                        <li>
+                            <Button Class="@docButton" @onclick="() => onAiNavButton(1)">docs</Button>
+                        </li>
+                        <li>
+                            <Button Class="@textButton" @onclick="() => onAiNavButton(2)">text</Button>
+                        </li>
+                        <li>
+                            <Button Class="@videoButton" Disabled @onclick="() => onAiNavButton(3)">video</Button>
+                        </li>
+                        <li>
+                            <Button Class="@videoButton" Disabled @onclick="() => onAiNavButton(3)">youtube</Button>
+                        </li>
+                        <li>
+                            <Button Class="@videoButton" Disabled @onclick="() => onAiNavButton(3)">website</Button>
+                        </li>
+                    </ul>
+                </nav>
+                <div>
+                    <div class="@docContent" style="height: 20em">
+                        <div class="@fileInputClass d-flex position-relative align-items-center" style="border: 2px dashed gray; border-radius: 5px; height: 100%; cursor: pointer;">
+                            <InputFile @key="@inputFileKey" OnChange="OnDocResource" @onmouseenter="() => isMouseIn = true" @onmouseleave="() => isMouseIn = false" class="d-flex file flex-column"></InputFile>
+
+                            <label class="w-100 text-center position-absolute mt-2 fw-bolder" style="height: 0px; color: gray; font-size: 0.7em"><Icon Name="IconName.Download" Size="IconSize.x4"></Icon> <br />Click or Drag & Drop to create model<br /> <span style="font-size: 0.6em">.pdf</span></label>
+                        </div>
+                    </div>
+
+                    <div class="@textContent d-flex flex-column gap-2 justify-content-start" style="height: 20em">
+                        <RadzenFormField Text="Enter title for the text" Style="font-size: 0.7em; color: gray">
+                            <RadzenTextBox @bind-Value="textTitleLabel" style="font-size: 0.9em;"></RadzenTextBox>
+                        </RadzenFormField>
+                        <RadzenFormField class="mb-2" Text="Copy and Paste text here" Style="font-size: 0.7em; color: gray">
+                            <RadzenTextArea @bind-Value="textBodyContent" class="" style="height: 18em; font-size: 0.9em;"></RadzenTextArea>
+                        </RadzenFormField>
+                        <Button @onclick="() => AddTextResource()" Style="background-color: black; color: white">Add Text</Button>
+                    </div>
+
+                    <div class="@videoContent" style="height: 20em">This is Video content</div>
+                </div>
+            </aside>
+            <aside class=" flex-fill p-3 align-items-center" style="background-color: rgba(0,0,0,0.15); border-radius: 7px; box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);">
+                <div class="d-flex mb-3 justify-content-between">
+                    <strong style="font-size: 0.9em">Resources: @(selectedDocFiles.Count + selectedTexts.Count)</strong>
+                    <a class="" @onclick="() => {selectedDocFiles.Clear(); selectedTexts.Clear();}" style="font-size: 0.8em">Clear</a>
+                </div>
+                @if(selectedTexts.Count > 0)
+                {
+                    <strong style="font-size: 0.7em">@selectedTexts.Count Text Resources:</strong>
+                    <ul>
+                        @foreach (var file in selectedTexts)
+                        {
+                            <li style="font-size: 0.6em; color: gray">@file.Key</li>
+                        }
+                    </ul>
+                }
+                @if(selectedDocFiles.Count > 0)
+                {
+                    <strong style="font-size: 0.7em">@selectedDocFiles.Count Document Resources:</strong>
+                    <ul>
+                        @foreach (var file in selectedDocFiles)
+                        {
+                            <li style="font-size: 0.6em; color: gray">@file.Key</li>
+                        }
+                    </ul>
+                }
+            </aside>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Cancel</Button>
+        <Button Class="px-4 ms-2" Color="ButtonColor.Primary" @onclick="NewCollection">Confirm</Button>
+    </FooterTemplate>
+</Modal>

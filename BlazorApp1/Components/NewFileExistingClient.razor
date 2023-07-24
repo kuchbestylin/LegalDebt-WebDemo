@@ -1,55 +1,42 @@
-﻿@page "/newfile/existingclient"
-
-<h3>Create a new File for an existing client</h3>
+﻿
 <div class="row d-flex justify-content-center">
-    <form class="p-5 col-7 mt-5" style="box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);">
+    <form class="p-5 col-md-10 col-12 mb-5 mt-4" style="box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);">
         <section class="d-flex w-100 mb-3 flex-column gap-4">
-@*            <div class="col-12 mb-4 gap-5 d-flex justify-content-center">
-                <div class="fw-bold p-0 fs-5 text-decoration-underline col-12 col-md-6">
-                    OPEN NEW FILE
-                </div>
-                <div class="d-none d-md-block col-3"></div>
-            </div>*@
-            <div class="w-100 d-flex gap-4 justify-content-center">
+            <div class="w-100 d-flex gap-4">
                 <div class="col-10">
-                    <RadzenFormField class="disabled" Text="Select Client" Style="width: 100%;font-size:0.8em; color:gray">
-                        <div class="rz-p-sm-8 rz-text-align-center">
-@*                            <RadzWenDropDown AllowClear="true" @bind-Value=clientID AllowVirtualization="true"
-                                            AllowFiltering="true" Data=@clients TextProperty="FullName" ValueProperty="Id" Style="width: 100%; max-width: 400px;" />*@
-                            <RadzenDropDownDataGrid class="col-7"  @bind-Value=@clientID Data=@clients TextProperty="FullName" ValueProperty="Id"
-                                                    AllowColumnResize="true" AllowFilteringByAllStringColumns="true">
-                                <Columns>
-                                    <RadzenDropDownDataGridColumn Property="FirstNames" Title="Name" Width="100px" />
-                                    <RadzenDropDownDataGridColumn Property="LastName" Title="Surname" Width="100px" />
-                                    <RadzenDropDownDataGridColumn Property="Id" Title="ID" Width="60px" />
-                                    <RadzenDropDownDataGridColumn Property="City" Title="City" Width="100px" />
-                                    <RadzenDropDownDataGridColumn Property="Country" Title="Country" Width="100px" />
-                                </Columns>
-                            </RadzenDropDownDataGrid>
-                        </div>
+                    <RadzenFormField Text="Select Client" Style="width: 100%;font-size:0.8em; color:gray">
+                        <RadzenDropDownDataGrid class="col-7" @bind-Value=@clientID Data=@clients TextProperty="FullName" ValueProperty="Id"
+                                                AllowColumnResize="true" FilterCaseSensitivity="Radzen.FilterCaseSensitivity.CaseInsensitive" PageSize="30">
+                            <Columns>
+                                <RadzenDropDownDataGridColumn Property="FirstNames" Title="Name" Width="100px" />
+                                <RadzenDropDownDataGridColumn Property="LastName" Title="Surname" Width="100px" />
+                                <RadzenDropDownDataGridColumn Property="Id" Title="ID" Width="60px" />
+                                <RadzenDropDownDataGridColumn Property="City" Title="City" Width="100px" />
+                            </Columns>
+                        </RadzenDropDownDataGrid>
                     </RadzenFormField>
                 </div>
             </div>
-            <div class="col-12 gap-5 d-flex justify-content-center">
+            <div class="col-12 gap-5 d-flex">
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Class="col-12 col-md-6 m-0">
                     <RadzenSelectBar @bind-Value="@variant" TextProperty="Text" ValueProperty="Value" Data="@(Enum.GetValues(typeof(Variant)).Cast<Variant>().Select(t => new { Text = $"{t}", Value = t }))" Size="ButtonSize.Small" Class="rz-display-none rz-display-xl-flex" />
                     <RadzenDropDown @bind-Value=@caseTypes Data=@caseCategories TextProperty="Name" ValueProperty="Id"
-                                    Multiple=true AllowClear=true Placeholder="Applicable Categories" Chips=true Style="width: 100%; max-width: 400px;" />
+                                    Multiple=true AllowClear=true Placeholder="Category" Chips=true Style="width: 100%; max-width: 400px;" />
                 </RadzenStack>
                 <div class="d-none d-md-block col-3"></div>
             </div>
-            <div class="w-100 d-flex gap-4 justify-content-center">
-                <div class="col-12 col-md-3">
+            <div class="w-100 d-flex gap-md-2 justify-content-between">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="File ID" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenTextBox @bind-Value="@firstName" Style="width: 100px; max-width: 400px; font-size:1em; color: black; height: 35px" />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Amount to be Paid" Style="width: 100%;">
                         <RadzenNumeric Style="font-size:0.7em; height: 35px; max-width: 400px;" TValue="double" Format="N$ ###" @bind-Value=@amountToBePaid />
                     </RadzenFormField>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4">
                     <RadzenFormField Text="Total Paid" Style="width: 100%;font-size:0.8em; color:gray">
                         <RadzenNumeric Style="font-size:0.7em; max-width: 400px; height: 35px" TValue="double" Format="N$ ###" @bind-Value=@amountPaid />
                     </RadzenFormField>

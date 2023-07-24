@@ -1,11 +1,9 @@
 .sb {
     background-color:black;
     opacity: 1;
-    width: 5em !important;
+    width: 60px !important;
 }
 
 .sb:hover {
-    opacity: 1;
-    width: 5em !important;
-    transition-duration: 0.4s;
+    transition-duration: 0.5s;
 }

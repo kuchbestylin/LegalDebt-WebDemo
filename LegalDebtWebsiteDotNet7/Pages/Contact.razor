@@ -1,0 +1,65 @@
+﻿@page "/contact"
+
+
+<div>
+    <div>
+        <h1>Get in touch</h1>
+        <form>
+            <div>
+                <label>NAME</label>
+                <InputText @bind-Value="name" placeholder="Full Name"></InputText>
+            </div>
+            <div>
+                <label>EMAIL</label>
+                <InputText @bind-Value="email" placeholder="email@exampledomain.com"></InputText>
+            </div>
+            <div>
+                <label>COMPANY</label>
+                <InputText @bind-Value="company" placeholder="Company Name"></InputText>
+            </div>
+            <div>
+                <label>SUBJECT</label>
+                <InputText @bind-Value="subject" placeholder="How can we help?"></InputText>
+            </div>
+            <div>
+                <label>MESSAGE</label>
+                <InputTextArea @bind-Value="message" placeholder="Your Message"></InputTextArea>
+            </div>
+            <div>
+                <button>Send Message</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h5>Want to reach use directly?</h5>
+        <p>Feel free to get in touch with our dedicated team for any questions, concerns, or support you may need</p>
+        <div>
+            <div>
+                <i class="fa fa-message"></i>
+                <label>info@gmobility.com</label>
+            </div>
+            <div>
+                <i class="fa fa-message"></i>
+                <label>support@gmobility.com</label>
+            </div>
+            <div>
+                <i class="fa fa-message"></i>
+                <label>press@gmobility.com</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+
+<SectionH></SectionH>
+
+
+
+@code{
+    string name = string.Empty;
+    string email = string.Empty;
+    string company = string.Empty;
+    string subject = string.Empty;
+    string message = string.Empty;
+}

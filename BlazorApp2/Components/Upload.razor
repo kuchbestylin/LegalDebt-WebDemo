@@ -1,0 +1,62 @@
+﻿
+<RadzenFormField Text="Drop PDFs here">
+    <InputFile OnChange="@LoadFile"></InputFile>
+</RadzenFormField>
+@code {
+    private async void LoadFile(InputFileChangeEventArgs e)
+    {
+        var reader = await new StreamReader(e.File.OpenReadStream()).ReadToEndAsync();
+    }
+
+    RadzenUpload upload;
+
+    int progress;
+    bool showProgress;
+    bool showComplete;
+    string completionMessage;
+    bool cancelUpload = false;
+
+    void CompleteUpload(UploadCompleteEventArgs args)
+    {
+        if (!args.Cancelled)
+            completionMessage = "Upload Complete!";
+        else
+            completionMessage = "Upload Cancelled!";
+
+        showProgress = false;
+        showComplete = true;
+    }
+
+    void TrackProgress(UploadProgressArgs args)
+    {
+        showProgress = true;
+        showComplete = false;
+        progress = args.Progress;
+
+        // cancel upload
+        args.Cancel = cancelUpload;
+
+        // reset cancel flag
+        cancelUpload = false;
+    }
+
+    void CancelUpload()
+    {
+        cancelUpload = true;
+    }
+
+    int customParameter = 1;
+
+    private async Task HandleSelection(UploadChangeEventArgs e)
+    {
+        //var file = e.File;
+        //if (file != null)
+        //{
+        //    var buffer = new byte[file.Size];
+        //    await file.OpenReadStream().ReadAsync(buffer);
+        //    var text = Encoding.UTF8.GetString(buffer);
+        //    // Do something with the text
+        //}
+    }
+
+}

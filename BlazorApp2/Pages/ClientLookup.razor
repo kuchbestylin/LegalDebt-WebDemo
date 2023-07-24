@@ -1,0 +1,286 @@
+﻿@page "/clientlookup"
+@inject TooltipService tooltipService
+
+<div class="d-flex fw-bold justify-content-center gap-0 gap-md-4 my-4 flex-wrap">
+    <div class="d-flex flex-column align-items-center gap-1">
+        <span class="" style="font-size: 0.6em; color:green">No Outstanding Debt</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip1(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:green;"></RadzenText>
+    </div>
+    <div class="d-flex flex-column align-items-center gap-1">
+        <span class="" style="font-size: 0.6em; color:lime">Partial Payment</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip2(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:lime"></RadzenText>
+    </div>
+    <div class="d-flex flex-column align-items-center gap-1">
+        <span class="" style="font-size: 0.6em; color:blue">Moderate Debt</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip3(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:blue"></RadzenText>
+    </div>
+    <div class="d-flex flex-column align-items-center gap-1">
+        <span class="" style="font-size: 0.6em; color:orange">Significant Debt</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip4(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:orange"></RadzenText>
+    </div>
+    <div class="d-flex flex-column align-items-center gap-1">
+        <span class="" style="font-size: 0.6em; color:red">Severe Debt</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip5(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:red"></RadzenText>
+    </div>
+</div>
+<section class="container m-0">
+    <div class="col-12 m-0 d-flex flex-wrap gap-3">
+        <div class="">
+            <RadzenDropDown @bind-Value=@filterValue Data=@filterBy Style="min-width: 195px;">
+                <Template>
+                    <span style="font-size: 0.8em"> Search By:</span> <strong style="font-size: 0.8em">@((context as String))</strong>
+                </Template>
+                <ValueTemplate>
+                    <span style="font-size: 0.8em">Search by: </span> <strong style="font-size: 0.9em">@((context as String))</strong>
+                </ValueTemplate>
+            </RadzenDropDown>
+        </div>
+        <div class="flex-grow-1" style="font-size: 0.8em">
+            <RadzenFormField style="margin-top:-0.5rem !important" class="m-0 w-100">
+                <Start><Icon Name="IconName.Search"></Icon></Start>
+                <ChildContent>
+                    <RadzenAutoComplete class="autocomplete" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  Change="@(args => onTextChanged(args.ToString()))" @bind-Value=@name Data=@db TextProperty="Client.FirstNames" Style="min-width: 170px; height: 6.4em; font-size: 0.6em;" />
+                </ChildContent>
+            </RadzenFormField>
+            <RadzenText TextStyle="TextStyle.Body2" style="font-size:0.8em;" class="off-white">
+                Start typing e.g. Britney
+            </RadzenText>
+        </div>
+    </div>
+</section>
+
+
+<section class="container-fluid m-0">
+    <div style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);">
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="8" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                    Data="@db" TItem="LegalFile" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+        <Columns>
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.CurrentCompany" Title="Law Firm" Frozen="true" Width="200px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.TitleOfCourtesy" Filterable="false" Title="Title" Frozen="true" Width="60px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.FirstNames" Title="Name(s)" Width="135px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.LastName" Title="Surname" Width="135px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="FileID" Title="File ID" FormatString="{0:d}" Width="155px" />
+            <RadzenDataGridColumn TItem="LegalFile" Title="File Debt Status" Width="173px">
+                <Template Context="data">
+                    <div class="" style="height:1.3em; width: 5em; border-radius:1em; background-color: @colorCode(data.Balance)"></div>
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="LegalFile" CssClass="d-grid-fs" Property="Client.Email" Title="Email" Width="160px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.City" Title="City" Width="104px" />
+            <RadzenDataGridColumn TItem="LegalFile" Property="Client.Country" Title="Country" Width="130px" />
+        </Columns>
+    </RadzenDataGrid>
+    </div>
+</section>
+
+
+
+@code {
+
+    private BlazorBootstrap.Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+
+
+
+    string filterValue = "Name";
+    string name = "";
+    bool auto = true;
+
+    public string colorCode(int amount)
+    {
+        @switch (amount)
+        {
+            case int n when (n >= 0 && n <= 500):
+                return "green";
+            case int n when (n > 500 && n <= 1500):
+                return "lime";
+            case int n when (n > 1500 && n <= 2500):
+                return "blue";
+            case int n when (n > 2500 && n <= 5000):
+                return "yellow";
+            case int n when (n > 5000):
+                return "red";
+            default:
+                return "white";
+        }
+    }
+    void ShowTooltip1(ElementReference elementReference, TooltipOptions options = null) => tooltipService.Open(elementReference, "N$ 0", options);
+    void ShowTooltip2(ElementReference elementReference, TooltipOptions options = null) => tooltipService.Open(elementReference, "N$ 1 - N$ 599", options);
+    void ShowTooltip3(ElementReference elementReference, TooltipOptions options = null) => tooltipService.Open(elementReference, "N$ 600 - N$ 1499", options);
+    void ShowTooltip4(ElementReference elementReference, TooltipOptions options = null) => tooltipService.Open(elementReference, "N$ 1500 - N$ 2999", options);
+    void ShowTooltip5(ElementReference elementReference, TooltipOptions options = null) => tooltipService.Open(elementReference, "> N$ 3000", options);
+    List<LegalFile> legalFiles = new List<LegalFile>()
+    {
+        new LegalFile()
+        {
+            Id = 1,
+            FileID = "BQ5GTH",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 750,
+            Client = new Client() { Id= 1, FirstNames = "Gerhardus", LastName = "Gaoseb", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 2,
+            FileID = "VDET53",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 300,
+            Client = new Client() { Id= 1, FirstNames = "Gerhardus", LastName = "Gaoseb", TitleOfCourtesy = "Mr", CurrentCompany = "Facebook.com", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 3,
+            FileID = "EGT5G3",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 45500,
+            Client = new Client() { Id= 1, FirstNames = "Jean", LastName = "Claude", TitleOfCourtesy = "Mrs", CurrentCompany = "Exodus Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 4,
+            FileID = "RB4GRQ",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 800,
+            Client = new Client() { Id= 1, FirstNames = "Hans", LastName = "Detriecht", TitleOfCourtesy = "Mr", CurrentCompany = "Shoprite", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 5,
+            FileID = "IUY535",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 1200,
+            Client = new Client() { Id= 1, FirstNames = "Payet", LastName = "Dimitry", TitleOfCourtesy = "Mrs", CurrentCompany = "Legal Wise", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 6,
+            FileID = "GBETG5",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 1000,
+            Client = new Client() { Id= 1, FirstNames = "Gerhardus", LastName = "Gaoseb", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 7,
+            FileID = "T5GERG",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 2000,
+            Client = new Client() { Id= 1, FirstNames = "Trent", LastName = "Arnold", TitleOfCourtesy = "Mrs", CurrentCompany = "Telecom Namibia", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 8,
+            FileID = "BBEREG",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 70500,
+            Client = new Client() { Id= 1, FirstNames = "Phillipe", LastName = "Coutinho", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 9,
+            FileID = "DFBETH",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 0,
+            Client = new Client() { Id= 1, FirstNames = "William", LastName = "Carvalho", TitleOfCourtesy = "Mrs", CurrentCompany = "Microsoft", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 10,
+            FileID = "GBGBT3",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 700,
+            Client = new Client() { Id= 1, FirstNames = "Cristiano", LastName = "Ronaldo", TitleOfCourtesy = "Mr", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 11,
+            FileID = "FB11LD",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 50,
+            Client = new Client() { Id= 1, FirstNames = "Matheus", LastName = "Louthaus", TitleOfCourtesy = "Mr", CurrentCompany = "Google", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        },
+        new LegalFile()
+        {
+            Id = 12,
+            FileID = "XRTRFD",
+            Title = "GMobility vs IkangaLegal",
+            Balance = 500,
+            Client = new Client() { Id= 1, FirstNames = "Gerhardus", LastName = "Gaoseb", TitleOfCourtesy = "Mrs", CurrentCompany = "Ikanga Legal Practitioners", City = "Windhoek", Country = "Namibia", Email = "jknox@gmail.com"},
+            ClientID = 1,
+            Company = new Company(){Id = 1, Name = "Exodus Legal Practitioners", Address = "Example adrress in Windhoek", Cellphone = 264427294585},
+            CompanyID = 1
+        }
+    };
+
+    List<LegalFile> db = new List<LegalFile>()
+    {
+    };
+
+    void onTextChanged(string text)
+    {
+        if (text == "")
+            db.Clear();
+
+            else
+                db = legalFiles.Select(file => file).Where(file => file.Client.FirstNames.ToLower().Contains(text.ToLower())).ToList();
+        }
+
+    Dictionary<int, String> colorCodes = new Dictionary<int, string>()
+    {
+        { 1, "green"}, { 2, "lime"}, { 3, "blue"}, { 4, "yellow"}, { 5, "red"}
+    };
+
+    List<String> filterBy = new List<string>()
+    {
+        "National ID", "Name", "File ID"
+    };
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await base.OnInitializedAsync();
+
+    //    employees = dbContext.Employees;
+    //}
+}

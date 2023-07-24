@@ -1,7 +1,7 @@
 ﻿@page "/clientlookup"
 @inject TooltipService tooltipService
 
-<div class="d-flex fw-bold justify-content-center gap-5 my-5">
+<div class="d-flex fw-bold justify-content-center gap-0 gap-md-4 my-4 flex-wrap">
     <div class="d-flex flex-column align-items-center gap-1">
         <span class="" style="font-size: 0.6em; color:green">No Outstanding Debt</span>
         <RadzenText MouseEnter="@(args => ShowTooltip1(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:green;"></RadzenText>
@@ -15,42 +15,36 @@
         <RadzenText MouseEnter="@(args => ShowTooltip3(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:blue"></RadzenText>
     </div>
     <div class="d-flex flex-column align-items-center gap-1">
-        <span class="" style="font-size: 0.6em; color:yellow">Significant Debt</span>
-        <RadzenText MouseEnter="@(args => ShowTooltip4(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:yellow"></RadzenText>
+        <span class="" style="font-size: 0.6em; color:orange">Significant Debt</span>
+        <RadzenText MouseEnter="@(args => ShowTooltip4(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:orange"></RadzenText>
     </div>
     <div class="d-flex flex-column align-items-center gap-1">
         <span class="" style="font-size: 0.6em; color:red">Severe Debt</span>
         <RadzenText MouseEnter="@(args => ShowTooltip5(args, new TooltipOptions(){ Delay = 200, Duration = 5000 }))" style="height:1.3em; width:5em; border-radius:1em; background-color:red"></RadzenText>
     </div>
 </div>
-<section>
-    <div class="w-100 d-flex flex-column align-items-center gap-2">
-
-        <div class="col-7 d-flex justify-content-center gap-3">
-            <div class="rz-text-align-center">
-                <RadzenDropDown @bind-Value=@value Data=@filterBy Style="width: 230px;">
-                    <Template>
-                        <span style="font-size: 0.8em"> Search By:</span> <strong style="font-size: 0.8em">@((context as String))</strong>
-                    </Template>
-                    <ValueTemplate>
-                        <span style="font-size: 0.8em">Search by: </span> <strong style="font-size: 0.9em">@((context as String))</strong>
-                    </ValueTemplate>
-                </RadzenDropDown>
-            </div>
-            <div class="" style="font-size: 0.8em">
-                <RadzenFormField style="margin-top:-0.5rem !important" class="m-0">
-                    <Start><Icon Name="IconName.Search"></Icon></Start>
-                    <ChildContent>
-                        <RadzenAutoComplete class="autocomplete" Change="@(args => onTextChanged(args.ToString()))" @bind-Value=@name Data=@db TextProperty="Client.FirstNames" Style="width: 23rem; height: 2.9em" />
-                    </ChildContent>
-                </RadzenFormField>
-                <RadzenText TextStyle="TextStyle.Body2" style="font-size:0.8em;" class="off-white">
-                    Start typing e.g. Britney
-                </RadzenText>
-            </div>
-            <div class="rz-text-align-center">
-                <CreateNew></CreateNew>
-            </div>
+<section class="container m-0">
+    <div class="col-12 m-0 d-flex flex-wrap gap-3">
+        <div class="">
+            <RadzenDropDown @bind-Value=@filterValue Data=@filterBy Style="min-width: 195px;">
+                <Template>
+                    <span style="font-size: 0.8em"> Search By:</span> <strong style="font-size: 0.8em">@((context as String))</strong>
+                </Template>
+                <ValueTemplate>
+                    <span style="font-size: 0.8em">Search by: </span> <strong style="font-size: 0.9em">@((context as String))</strong>
+                </ValueTemplate>
+            </RadzenDropDown>
+        </div>
+        <div class="flex-grow-1" style="font-size: 0.8em">
+            <RadzenFormField style="margin-top:-0.5rem !important" class="m-0 w-100">
+                <Start><Icon Name="IconName.Search"></Icon></Start>
+                <ChildContent>
+                    <RadzenAutoComplete class="autocomplete" Change="@(args => onTextChanged(args.ToString()))" @bind-Value=@name Data=@db TextProperty="Client.FirstNames" Style="min-width: 180px; height: 2.9em" />
+                </ChildContent>
+            </RadzenFormField>
+            <RadzenText TextStyle="TextStyle.Body2" style="font-size:0.8em;" class="off-white">
+                Start typing e.g. Britney
+            </RadzenText>
         </div>
     </div>
 </section>
@@ -69,8 +63,8 @@
 
 
 
-<div class="d-flex justify-content-center">
-    <section class="py-0 px-0 mt-2 col-10" style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);">
+<section class="container-fluid m-0">
+    <div style="box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);">
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="8" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
                     Data="@db" TItem="LegalFile" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
         <Columns>
@@ -89,8 +83,8 @@
             <RadzenDataGridColumn TItem="LegalFile" Property="Client.Country" Title="Country" Width="130px" />
         </Columns>
     </RadzenDataGrid>
-    </section>
-</div>
+    </div>
+</section>
 
 
 
@@ -118,7 +112,22 @@
 
 
 @code {
-    string value = "";
+
+    private BlazorBootstrap.Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+
+
+
+    string filterValue = "Name";
     string name = "";
     bool auto = true;
 
@@ -433,7 +442,7 @@
 
     List<String> filterBy = new List<string>()
     {
-        "Client ID", "Client Name", "Client Surname"
+        "National ID", "Name", "File ID"
     };
 
     //protected override async Task OnInitializedAsync()
